@@ -35,17 +35,17 @@ const Home = () => {
         <img
           src={profileImg}
           alt=""
-          className="w-auto h-[85vh] object-contain object-bottom opacity-40 md:opacity-50"
+          className="w-auto h-[85vh] object-contain object-bottom opacity-90"
           style={{
-            maskImage: "linear-gradient(to top, transparent 0%, black 20%, black 70%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 20%, black 70%, transparent 100%)",
+            maskImage: "linear-gradient(to top, transparent 0%, black 15%, black 80%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 15%, black 80%, transparent 100%)",
           }}
         />
       </div>
 
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/60 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80 pointer-events-none" />
+      {/* Gradient overlays - subtle, only on edges for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/70 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex pt-24">
