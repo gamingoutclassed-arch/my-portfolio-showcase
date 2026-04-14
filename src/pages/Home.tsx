@@ -30,22 +30,22 @@ const KaggleIcon = ({ size = 18 }: { size?: number }) => (
 const Home = () => {
   return (
     <section className="min-h-screen relative overflow-hidden bg-background">
-      {/* Background profile image */}
-      <div className="absolute inset-0 flex items-end justify-center pointer-events-none">
+      {/* Background profile image — centered, large, like the Developer X template */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: "5%" }}>
         <img
           src={profileImg}
           alt=""
-          className="w-auto h-[85vh] object-contain object-bottom opacity-90"
-          style={{
-            maskImage: "linear-gradient(to top, transparent 0%, black 15%, black 80%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 15%, black 80%, transparent 100%)",
-          }}
+          className="h-[80vh] md:h-[90vh] w-auto max-w-none object-contain"
         />
       </div>
 
-      {/* Gradient overlays - subtle, only on edges for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/70 pointer-events-none" />
+      {/* Gradient overlays — left side heavier for text, right lighter for sidebar */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "linear-gradient(to right, hsl(220 20% 7%) 0%, hsl(220 20% 7% / 0.85) 25%, hsl(220 20% 7% / 0.4) 45%, hsl(220 20% 7% / 0.3) 55%, hsl(220 20% 7% / 0.7) 80%, hsl(220 20% 7%) 100%)"
+      }} />
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "linear-gradient(to bottom, hsl(220 20% 7% / 0.6) 0%, transparent 20%, transparent 75%, hsl(220 20% 7%) 100%)"
+      }} />
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex pt-24">
