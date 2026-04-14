@@ -35,13 +35,13 @@ const Home = () => {
         <img
           src={profileImg}
           alt=""
-          className="h-[80vh] md:h-[90vh] w-auto max-w-none object-contain"
+          className="h-[80vh] md:h-[90vh] w-auto max-w-none object-contain brightness-125 contrast-105"
         />
       </div>
 
       {/* Gradient overlays — left side heavier for text, right lighter for sidebar */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: "linear-gradient(to right, hsl(220 20% 7%) 0%, hsl(220 20% 7% / 0.85) 25%, hsl(220 20% 7% / 0.4) 45%, hsl(220 20% 7% / 0.3) 55%, hsl(220 20% 7% / 0.7) 80%, hsl(220 20% 7%) 100%)"
+        background: "linear-gradient(to right, hsl(220 20% 7%) 0%, hsl(220 20% 7% / 0.8) 20%, hsl(220 20% 7% / 0.25) 40%, hsl(220 20% 7% / 0.15) 55%, hsl(220 20% 7% / 0.6) 80%, hsl(220 20% 7%) 100%)"
       }} />
       <div className="absolute inset-0 pointer-events-none" style={{
         background: "linear-gradient(to bottom, hsl(220 20% 7% / 0.6) 0%, transparent 20%, transparent 75%, hsl(220 20% 7%) 100%)"
@@ -90,6 +90,11 @@ const Home = () => {
                 style={{ background: "var(--gradient-primary)" }}
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 2 }}
+                onClick={() => {
+                  const footer = document.querySelector('footer');
+                  if (footer) footer.scrollIntoView({ behavior: 'smooth' });
+                  else window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }}
               >
                 <ArrowDown className="text-primary-foreground" size={24} />
               </motion.div>
