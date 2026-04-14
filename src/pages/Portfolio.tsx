@@ -43,7 +43,7 @@ const projects = [
     category: "NLP",
     image: imgEmail,
     github: "https://github.com/MurtazaMajid/Email-Classification-App",
-    demo: "",
+    demo: "https://mailntel.vercel.app",
   },
   {
     title: "Document Categorization using NLP",
@@ -52,7 +52,7 @@ const projects = [
     category: "NLP",
     image: imgDocument,
     github: "https://github.com/MurtazaMajid/Document-Categorization",
-    demo: "",
+    demo: "https://bert-news-classification.vercel.app/",
   },
   {
     title: "Titanic Survival Classification",
@@ -79,7 +79,7 @@ const projects = [
     category: "Data Analysis",
     image: imgApple,
     github: "https://github.com/MurtazaMajid/Apple-FHI-Forecasting-with-ARIMA-LSTM",
-    demo: "",
+    demo: "https://apple-fhi-forecasting-with-arima-lstm.vercel.app/",
   },
   {
     title: "British Airways Analysis",
@@ -97,7 +97,7 @@ const projects = [
     category: "Machine Learning",
     image: imgPlanets,
     github: "https://github.com/MurtazaMajid/Predicing-Planets-Habitability",
-    demo: "",
+    demo: "https://astro-life-quest.vercel.app/",
   },
   {
     title: "Parking Violation Risk Prediction",
