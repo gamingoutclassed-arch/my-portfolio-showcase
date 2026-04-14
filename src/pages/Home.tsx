@@ -15,100 +15,137 @@ const LinkedinIcon = ({ size = 18 }: { size?: number }) => (
   </svg>
 );
 
+const TwitterIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+  </svg>
+);
+
+const KaggleIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.281.18.046.149.034.238-.036.27l-6.555 6.344 6.836 8.507c.095.118.116.211.075.281z"/>
+  </svg>
+);
+
 const Home = () => {
   return (
     <section className="min-h-screen relative overflow-hidden bg-background">
-      {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-between pt-24 pb-8">
-        {/* Profile photo centered */}
-        <div className="flex-1 flex flex-col items-center justify-center">
+      {/* Background profile image */}
+      <div className="absolute inset-0 flex items-end justify-center pointer-events-none">
+        <img
+          src={profileImg}
+          alt=""
+          className="w-auto h-[85vh] object-contain object-bottom opacity-40 md:opacity-50"
+          style={{
+            maskImage: "linear-gradient(to top, transparent 0%, black 20%, black 70%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 20%, black 70%, transparent 100%)",
+          }}
+        />
+      </div>
+
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/60 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80 pointer-events-none" />
+
+      {/* Content */}
+      <div className="relative z-10 min-h-screen flex pt-24">
+        <div className="container mx-auto px-6 flex flex-col lg:grid lg:grid-cols-12 gap-8 flex-1">
+          
+          {/* Left: Hero text */}
+          <div className="lg:col-span-7 flex flex-col justify-end pb-16 lg:pb-24">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: 80 }}
+              transition={{ duration: 0.6 }}
+              className="h-1 bg-foreground mb-8"
+            />
+
+            <motion.h1
+              className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-[1.08] mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              I'm Murtaza, a<br />
+              <span className="text-primary">Data Scientist</span>
+            </motion.h1>
+
+            <motion.p
+              className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Passionate about transforming data into meaningful insights through machine learning, deep learning, and AI-driven solutions.
+            </motion.p>
+
+            {/* Scroll down button */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              <motion.div
+                className="w-14 h-14 rounded-full flex items-center justify-center cursor-pointer"
+                style={{ background: "var(--gradient-primary)" }}
+                animate={{ y: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+              >
+                <ArrowDown className="text-primary-foreground" size={24} />
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* Right: Info sidebar */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="mb-8"
+            className="lg:col-span-5 flex flex-col justify-center gap-10 pb-16 lg:pb-24 lg:pl-8"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
           >
-            <div className="w-48 h-48 md:w-56 md:h-56 rounded-full border-2 border-primary overflow-hidden mx-auto">
-              <img
-                src={profileImg}
-                alt="Murtaza Majid"
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-          </motion.div>
-
-          {/* Divider line */}
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: 64 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="h-0.5 bg-foreground mb-8"
-          />
-
-          {/* Hero text */}
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-          >
-            <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-[1.1] mb-6">
-              I'm Murtaza, a<br />Data Scientist
-            </h1>
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl mx-auto px-6">
-              Passionate about transforming data into meaningful insights and innovative solutions.
-            </p>
-          </motion.div>
-
-          {/* Scroll down */}
-          <motion.div
-            className="mt-12"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          >
-            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "var(--gradient-primary)" }}>
-              <ArrowDown className="text-primary-foreground" size={22} />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Bottom info panels */}
-        <motion.div
-          className="container mx-auto px-6 mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            {/* About Me */}
             <div>
-              <h3 className="text-foreground font-heading font-bold text-sm uppercase tracking-widest mb-3">About Me</h3>
+              <h3 className="text-foreground font-heading font-bold text-sm uppercase tracking-[0.2em] mb-4">
+                About Me
+              </h3>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                I am Murtaza a creative and a passionate Data Science student.
+                I am Murtaza, a creative and passionate Data Science student specializing in machine learning, NLP, and computer vision.
               </p>
-              <Link to="/about" className="inline-flex items-center gap-2 text-foreground text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wider">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 text-foreground text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wider border-b border-foreground hover:border-primary pb-1"
+              >
                 Learn More →
               </Link>
             </div>
 
+            {/* My Work */}
             <div>
-              <h3 className="text-foreground font-heading font-bold text-sm uppercase tracking-widest mb-3">My Work</h3>
+              <h3 className="text-foreground font-heading font-bold text-sm uppercase tracking-[0.2em] mb-4">
+                My Work
+              </h3>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                I have done many Data Science projects, check them out.
+                I have built numerous data science projects spanning deep learning, NLP, and predictive analytics.
               </p>
-              <Link to="/portfolio" className="inline-flex items-center gap-2 text-foreground text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wider">
+              <Link
+                to="/portfolio"
+                className="inline-flex items-center gap-2 text-foreground text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wider border-b border-foreground hover:border-primary pb-1"
+              >
                 Browse Portfolio →
               </Link>
             </div>
 
+            {/* Follow Me */}
             <div>
-              <h3 className="text-foreground font-heading font-bold text-sm uppercase tracking-widest mb-3">Follow Me</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                Connect with me on social media to stay updated with my latest work.
-              </p>
-              <div className="flex justify-center gap-4">
+              <h3 className="text-foreground font-heading font-bold text-sm uppercase tracking-[0.2em] mb-4">
+                Follow Me
+              </h3>
+              <div className="flex gap-5">
                 {[
-                  { icon: LinkedinIcon, href: "https://linkedin.com/in/murtaza-majid" },
                   { icon: GithubIcon, href: "https://github.com/MurtazaMajid" },
+                  { icon: LinkedinIcon, href: "https://linkedin.com/in/murtaza-majid" },
+                  { icon: TwitterIcon, href: "#" },
+                  { icon: KaggleIcon, href: "#" },
                   { icon: Mail, href: "mailto:Murtazamajid.123@gmail.com" },
                 ].map(({ icon: Icon, href }, i) => (
                   <a
@@ -116,15 +153,15 @@ const Home = () => {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Icon size={20} />
                   </a>
                 ))}
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
