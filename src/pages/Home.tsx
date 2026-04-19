@@ -94,9 +94,13 @@ const Home = () => {
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 2 }}
                 onClick={() => {
-                  const footer = document.querySelector('footer');
-                  if (footer) footer.scrollIntoView({ behavior: 'smooth' });
-                  else window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                  const about = document.getElementById('about');
+                  if (about) about.scrollIntoView({ behavior: 'smooth' });
+                  else {
+                    const footer = document.querySelector('footer');
+                    if (footer) footer.scrollIntoView({ behavior: 'smooth' });
+                    else window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                  }
                 }}
               >
                 <ArrowDown className="text-primary-foreground" size={24} />
