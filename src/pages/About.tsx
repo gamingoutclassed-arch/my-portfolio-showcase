@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
-import { Download, Eye, Briefcase, Calendar, MapPin } from "lucide-react";
+import { Download, Eye } from "lucide-react";
 import profileImg from "@/assets/murtaza-profile.png";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SkillsRadar from "@/components/SkillsRadar";
+import CareerTimeline from "@/components/CareerTimeline";
+import TerminalBio from "@/components/TerminalBio";
 
 const skills = [
   "Python", "R", "SQL", "Machine Learning", "Deep Learning", "Data Visualization",
