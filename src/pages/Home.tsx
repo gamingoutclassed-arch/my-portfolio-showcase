@@ -31,11 +31,12 @@ const Home = () => {
   return (
     <section className="min-h-screen relative overflow-hidden bg-background">
       {/* Background profile image — centered, large, like the Developer X template */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: "5%" }}>
+      <div className="absolute inset-0 flex items-start justify-center pointer-events-none overflow-hidden">
         <img
           src={profileImg}
           alt=""
-          className="h-[80vh] md:h-[90vh] w-auto max-w-none object-contain brightness-125 contrast-105"
+          className="h-[95vh] md:h-[110vh] w-auto max-w-none object-contain object-top brightness-125 contrast-105 -mt-[5vh]"
+          style={{ clipPath: "inset(0 15% 0 15%)" }}
         />
       </div>
 
@@ -71,7 +72,7 @@ const Home = () => {
             </motion.h1>
 
             <motion.p
-              className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg mb-10"
+              className="text-foreground text-base md:text-lg leading-relaxed max-w-lg mb-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -113,7 +114,7 @@ const Home = () => {
               <h3 className="text-foreground font-heading font-bold text-sm uppercase tracking-[0.2em] mb-4">
                 About Me
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+              <p className="text-foreground text-sm leading-relaxed mb-4">
                 I am Murtaza, a creative and passionate Data Science student specializing in machine learning, NLP, and computer vision.
               </p>
               <Link
@@ -129,7 +130,7 @@ const Home = () => {
               <h3 className="text-foreground font-heading font-bold text-sm uppercase tracking-[0.2em] mb-4">
                 My Work
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+              <p className="text-foreground text-sm leading-relaxed mb-4">
                 I have built numerous data science projects spanning deep learning, NLP, and predictive analytics.
               </p>
               <Link
