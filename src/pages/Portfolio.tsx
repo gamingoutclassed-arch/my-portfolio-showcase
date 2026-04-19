@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, LayoutGrid, CircleDot } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ProjectBubbleChart from "@/components/ProjectBubbleChart";
 
 import imgWeapon from "@/assets/projects/weapon-detection.jpg";
 import imgTitanic from "@/assets/projects/titanic.jpg";
