@@ -35,7 +35,7 @@ const Home = () => {
         <img
           src={profileImg}
           alt=""
-          className="h-[70vh] md:h-[100vh] w-auto max-w-none object-contain object-top brightness-125 contrast-105 mt-20 md:mt-8 opacity-70 md:opacity-100"
+          className="h-[65vh] md:h-[90vh] w-auto max-w-none object-contain object-top brightness-125 contrast-105 mt-28 md:mt-20 opacity-70 md:opacity-100"
         />
       </div>
 
