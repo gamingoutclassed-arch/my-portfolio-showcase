@@ -1,24 +1,17 @@
 import { motion } from "framer-motion";
 import { Download, Eye } from "lucide-react";
-import profileImg from "@/assets/murtaza-profile.png";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SkillsRadar from "@/components/SkillsRadar";
 import CareerTimeline from "@/components/CareerTimeline";
 import TerminalBio from "@/components/TerminalBio";
 
-const skills = [
-  "Python", "R", "SQL", "Machine Learning", "Deep Learning", "Data Visualization",
-  "Statistical Analysis", "TensorFlow", "PyTorch", "Pandas", "NumPy", "Scikit-learn",
-  "Tableau", "Power BI", "Data Mining", "Natural Language Processing",
-  "OpenCV", "MediaPipe", "YOLOv11", "Streamlit", "FastAPI", "Feature Engineering",
-];
-
 const experience = [
   {
     title: "Computer Vision & AI Intern",
     company: "Scoutrex",
     location: "Islamabad",
+    startYear: 2025.92,
     period: "Dec 2025 – Feb 2026",
     points: [
       "Optimized PyTorch models for cricket video analysis under motion blur and varied lighting.",
@@ -29,6 +22,7 @@ const experience = [
     title: "Data Science Intern",
     company: "ITSOLERA Pvt. Ltd.",
     location: "Islamabad",
+    startYear: 2025.5,
     period: "Jul 2025 – Sep 2025",
     points: [
       "Improved time-series forecast accuracy by 15% using LSTM, ARIMA, XGBoost, and Random Forest models.",
@@ -39,6 +33,7 @@ const experience = [
     title: "LLM Task Trainer",
     company: "Turing",
     location: "Remote",
+    startYear: 2024,
     period: "2024",
     points: [
       "Engineered system/user prompts and multi-step task chains to optimize instruction following.",
@@ -49,6 +44,7 @@ const experience = [
     title: "Content Writer",
     company: "Xerosector Technologies",
     location: "Remote",
+    startYear: 2022.5,
     period: "Jul 2022 – Aug 2022",
     points: [
       "Created 50+ SEO-optimized product descriptions, boosting organic traffic by 15%.",
@@ -77,24 +73,19 @@ export const AboutContent = () => {
         </div>
       </section>
 
-      {/* Who I Am */}
+      {/* Who I Am — Terminal bio + meta */}
       <section className="pb-20">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div {...fadeUp} className="flex justify-center">
-              <div className="w-72 h-80 rounded-xl overflow-hidden border-2 border-primary/30" style={{ boxShadow: "var(--shadow-glow)" }}>
-                <img src={profileImg} alt="Murtaza Majid" className="w-full h-full object-cover object-top" />
-              </div>
+          <div className="grid md:grid-cols-2 gap-10 items-start max-w-5xl mx-auto">
+            <motion.div {...fadeUp}>
+              <TerminalBio />
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ delay: 0.2, duration: 0.5 }}>
               <h2 className="text-2xl font-bold font-heading text-foreground mb-2">Who I Am</h2>
               <div className="w-12 h-1 rounded-full mb-6" style={{ background: "var(--gradient-primary)" }} />
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                I am a dedicated and innovative data scientist with a strong foundation in data analysis, machine learning, and visualization. With a creative mindset and a detail-oriented approach, I thrive on uncovering meaningful insights from complex datasets and transforming them into actionable solutions.
-              </p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Passionate about continuous learning, I combine my technical expertise with a flair for design, excelling in projects that blend analytical rigor with aesthetic appeal.
+                A dedicated and innovative data scientist with a strong foundation in data analysis, machine learning, and visualization. I combine technical expertise with a flair for design — shipping projects that blend analytical rigor with aesthetic appeal.
               </p>
 
               <div className="grid grid-cols-2 gap-4 mb-8 text-sm">
@@ -127,48 +118,25 @@ export const AboutContent = () => {
         </div>
       </section>
 
-      {/* Skills */}
+      {/* Skills — Radar chart */}
       <section className="pb-20">
         <div className="container mx-auto px-6">
-          <motion.h2 className="section-heading text-center" {...fadeUp}>My Skills</motion.h2>
+          <motion.h2 className="section-heading text-center" {...fadeUp}>Skill Radar</motion.h2>
           <div className="section-divider" />
-          <div className="max-w-4xl mx-auto">
-            <motion.div className="flex flex-wrap justify-center gap-3" {...fadeUp}>
-              {skills.map((skill) => (
-                <span key={skill} className="skill-badge">{skill}</span>
-              ))}
-            </motion.div>
-          </div>
+          <motion.div className="max-w-2xl mx-auto" {...fadeUp}>
+            <SkillsRadar />
+          </motion.div>
         </div>
       </section>
 
-      {/* Experience */}
+      {/* Experience — Career timeline plot */}
       <section className="pb-20">
         <div className="container mx-auto px-6">
-          <motion.h2 className="section-heading text-center" {...fadeUp}>Work Experience</motion.h2>
+          <motion.h2 className="section-heading text-center" {...fadeUp}>Career Timeline</motion.h2>
           <div className="section-divider" />
-          <div className="max-w-3xl mx-auto space-y-6">
-            {experience.map((exp, i) => (
-              <motion.div key={i} className="glass-card p-6" {...fadeUp} transition={{ delay: i * 0.1, duration: 0.5 }}>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
-                  <h3 className="text-foreground font-heading font-semibold text-lg">{exp.title}</h3>
-                  <span className="flex items-center gap-1 text-primary text-sm"><Calendar size={14} /> {exp.period}</span>
-                </div>
-                <div className="flex items-center gap-3 text-muted-foreground text-sm mb-3">
-                  <span className="flex items-center gap-1"><Briefcase size={14} /> {exp.company}</span>
-                  <span className="flex items-center gap-1"><MapPin size={14} /> {exp.location}</span>
-                </div>
-                <ul className="space-y-2">
-                  {exp.points.map((point, j) => (
-                    <li key={j} className="text-muted-foreground text-sm flex gap-2">
-                      <span className="text-primary mt-1.5 shrink-0">•</span>
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div className="max-w-4xl mx-auto" {...fadeUp}>
+            <CareerTimeline roles={experience} />
+          </motion.div>
         </div>
       </section>
     </>
