@@ -117,16 +117,14 @@ const fadeUp = {
   transition: { duration: 0.5 },
 };
 
-const Portfolio = () => {
+export const PortfolioContent = () => {
   const [active, setActive] = useState("All");
 
   const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-
-      <section className="pt-28 pb-8">
+    <>
+      <section id="portfolio" className="pt-20 pb-8 md:pt-28">
         <div className="container mx-auto px-6 text-center">
           <motion.h1 className="section-heading" {...fadeUp}>My Portfolio</motion.h1>
           <div className="section-divider" />
@@ -227,10 +225,17 @@ const Portfolio = () => {
           )}
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 
+const Portfolio = () => (
+  <div className="min-h-screen bg-background">
+    <Navbar />
+    <PortfolioContent />
+    <Footer />
+  </div>
+);
+
 export default Portfolio;
+

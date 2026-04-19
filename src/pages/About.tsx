@@ -60,13 +60,11 @@ const fadeUp = {
   transition: { duration: 0.5 },
 };
 
-const About = () => {
+export const AboutContent = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-
+    <>
       {/* Hero */}
-      <section className="pt-28 pb-16">
+      <section id="about" className="pt-20 pb-12 md:pt-28 md:pb-16">
         <div className="container mx-auto px-6 text-center">
           <motion.h1 className="section-heading" {...fadeUp}>About Me</motion.h1>
           <div className="section-divider" />
@@ -170,7 +168,15 @@ const About = () => {
           </div>
         </div>
       </section>
+    </>
+  );
+};
 
+const About = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <AboutContent />
       <Footer />
     </div>
   );
