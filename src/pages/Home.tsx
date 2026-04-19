@@ -197,6 +197,11 @@ const Home = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Scrolling tech stack ticker */}
+      <div className="absolute bottom-0 left-0 right-0 z-10">
+        <TechTicker />
+      </div>
     </section>
   );
 };
