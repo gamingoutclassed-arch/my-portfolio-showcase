@@ -225,10 +225,17 @@ export const PortfolioContent = () => {
           )}
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 
+const Portfolio = () => (
+  <div className="min-h-screen bg-background">
+    <Navbar />
+    <PortfolioContent />
+    <Footer />
+  </div>
+);
+
 export default Portfolio;
+
