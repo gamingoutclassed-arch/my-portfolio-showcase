@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import { ArrowDown, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import profileImg from "@/assets/murtaza-profile.png";
+import NeuralNetworkBg from "@/components/NeuralNetworkBg";
+import TypewriterTitle from "@/components/TypewriterTitle";
+import StatCounter from "@/components/StatCounter";
+import TechTicker from "@/components/TechTicker";
 
 const GithubIcon = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -30,6 +34,9 @@ const KaggleIcon = ({ size = 18 }: { size?: number }) => (
 const Home = () => {
   return (
     <section className="min-h-screen relative overflow-hidden bg-background">
+      {/* Bold neural network background */}
+      <NeuralNetworkBg />
+
       {/* Background profile image — centered, large, like the Developer X template */}
       <div className="absolute inset-0 flex items-start justify-center pointer-events-none overflow-hidden">
         <img
@@ -70,8 +77,23 @@ const Home = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               I'm Murtaza, a<br />
-              <span className="text-primary">Data Scientist</span>
+              <TypewriterTitle
+                className="text-primary"
+                words={["Data Scientist", "ML Engineer", "Computer Vision Dev", "NLP Builder", "Deep Learning Eng"]}
+              />
             </motion.h1>
+
+            {/* Animated stat counters */}
+            <motion.div
+              className="grid grid-cols-3 gap-4 max-w-md mb-8 p-4 rounded-xl border border-border bg-card/40 backdrop-blur-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              <StatCounter end={10} suffix="+" label="Projects" />
+              <StatCounter end={95} suffix="%" label="Best Acc." />
+              <StatCounter end={4} label="Roles" />
+            </motion.div>
 
             <motion.p
               className="text-foreground text-base md:text-lg leading-relaxed max-w-lg mb-10"
