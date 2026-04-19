@@ -35,16 +35,19 @@ const Home = () => {
         <img
           src={profileImg}
           alt=""
-          className="h-[95vh] md:h-[110vh] w-auto max-w-none object-contain object-top brightness-125 contrast-105 -mt-[5vh]"
+          className="h-[70vh] md:h-[110vh] w-auto max-w-none object-contain object-top brightness-125 contrast-105 mt-16 md:-mt-[5vh] opacity-60 md:opacity-100"
           style={{ clipPath: "inset(0 15% 0 15%)" }}
         />
       </div>
 
       {/* Gradient overlays — left side heavier for text, right lighter for sidebar */}
-      <div className="absolute inset-0 pointer-events-none" style={{
+      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{
         background: "linear-gradient(to right, hsl(220 20% 7%) 0%, hsl(220 20% 7% / 0.8) 20%, hsl(220 20% 7% / 0.25) 40%, hsl(220 20% 7% / 0.15) 55%, hsl(220 20% 7% / 0.6) 80%, hsl(220 20% 7%) 100%)"
       }} />
-      <div className="absolute inset-0 pointer-events-none" style={{
+      <div className="absolute inset-0 pointer-events-none md:hidden" style={{
+        background: "linear-gradient(to bottom, hsl(220 20% 7% / 0.85) 0%, hsl(220 20% 7% / 0.7) 30%, hsl(220 20% 7% / 0.85) 60%, hsl(220 20% 7%) 90%)"
+      }} />
+      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{
         background: "linear-gradient(to bottom, hsl(220 20% 7% / 0.6) 0%, transparent 20%, transparent 75%, hsl(220 20% 7%) 100%)"
       }} />
 
