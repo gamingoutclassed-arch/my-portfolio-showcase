@@ -257,8 +257,9 @@ export const PortfolioContent = () => {
               ))}
             </motion.div>
           </AnimatePresence>
+          )}
 
-          {filtered.length === 0 && (
+          {view === "grid" && filtered.length === 0 && (
             <p className="text-center text-muted-foreground py-12">No projects in this category yet.</p>
           )}
         </div>
