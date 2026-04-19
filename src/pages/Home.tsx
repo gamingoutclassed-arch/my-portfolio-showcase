@@ -35,8 +35,7 @@ const Home = () => {
         <img
           src={profileImg}
           alt=""
-          className="h-[70vh] md:h-[110vh] w-auto max-w-none object-contain object-top brightness-125 contrast-105 mt-16 md:-mt-[5vh] opacity-60 md:opacity-100"
-          style={{ clipPath: "inset(0 15% 0 15%)" }}
+          className="h-[70vh] md:h-[100vh] w-auto max-w-none object-contain object-top brightness-125 contrast-105 mt-20 md:mt-8 opacity-70 md:opacity-100"
         />
       </div>
 
