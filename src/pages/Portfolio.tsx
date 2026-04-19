@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, LayoutGrid, CircleDot } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ProjectBubbleChart from "@/components/ProjectBubbleChart";
 
 import imgWeapon from "@/assets/projects/weapon-detection.jpg";
 import imgTitanic from "@/assets/projects/titanic.jpg";
@@ -110,6 +111,20 @@ const projects = [
   },
 ];
 
+// Visual complexity (1-10) per project, drives bubble-chart sizing
+const COMPLEXITY: Record<string, number> = {
+  "AutoCop – AI Traffic Violation Detection": 10,
+  "Weapon Detection with YOLOv8": 8,
+  "Gmail Email Classification Pipeline": 9,
+  "Document Categorization using NLP": 7,
+  "Titanic Survival Classification": 5,
+  "Hazardous NEOs Prediction": 6,
+  "Apple FHI Forecasting with ARIMA & LSTM": 8,
+  "British Airways Analysis": 6,
+  "Predicting Planets Habitability": 7,
+  "Parking Violation Risk Prediction": 9,
+};
+
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
@@ -119,6 +134,7 @@ const fadeUp = {
 
 export const PortfolioContent = () => {
   const [active, setActive] = useState("All");
+  const [view, setView] = useState<"grid" | "bubble">("grid");
 
   const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
@@ -132,7 +148,7 @@ export const PortfolioContent = () => {
             Here are some of my data science projects. Each project demonstrates my skills in different areas of data analysis, machine learning, and visualization.
           </motion.p>
 
-          <motion.div className="flex flex-wrap justify-center gap-3 mb-12" {...fadeUp} transition={{ delay: 0.2, duration: 0.5 }}>
+          <motion.div className="flex flex-wrap justify-center gap-3 mb-6" {...fadeUp} transition={{ delay: 0.2, duration: 0.5 }}>
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -143,11 +159,57 @@ export const PortfolioContent = () => {
               </button>
             ))}
           </motion.div>
+
+          {/* View toggle */}
+          <motion.div
+            className="inline-flex items-center gap-1 p-1 rounded-full border border-border bg-card mb-12"
+            {...fadeUp}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <button
+              onClick={() => setView("grid")}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                view === "grid" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-pressed={view === "grid"}
+            >
+              <LayoutGrid size={14} /> Grid
+            </button>
+            <button
+              onClick={() => setView("bubble")}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                view === "bubble" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-pressed={view === "bubble"}
+            >
+              <CircleDot size={14} /> Bubble
+            </button>
+          </motion.div>
         </div>
       </section>
 
       <section className="pb-20">
         <div className="container mx-auto px-6">
+          {view === "bubble" ? (
+            <motion.div
+              key="bubble"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              <ProjectBubbleChart
+                projects={projects.map((p) => ({
+                  title: p.title,
+                  category: p.category,
+                  github: p.github,
+                  demo: p.demo,
+                  complexity: COMPLEXITY[p.title] ?? 6,
+                }))}
+                categories={categories}
+                active={active}
+              />
+            </motion.div>
+          ) : (
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -219,8 +281,9 @@ export const PortfolioContent = () => {
               ))}
             </motion.div>
           </AnimatePresence>
+          )}
 
-          {filtered.length === 0 && (
+          {view === "grid" && filtered.length === 0 && (
             <p className="text-center text-muted-foreground py-12">No projects in this category yet.</p>
           )}
         </div>
