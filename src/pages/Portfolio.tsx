@@ -111,6 +111,20 @@ const projects = [
   },
 ];
 
+// Visual complexity (1-10) per project, drives bubble-chart sizing
+const COMPLEXITY: Record<string, number> = {
+  "AutoCop – AI Traffic Violation Detection": 10,
+  "Weapon Detection with YOLOv8": 8,
+  "Gmail Email Classification Pipeline": 9,
+  "Document Categorization using NLP": 7,
+  "Titanic Survival Classification": 5,
+  "Hazardous NEOs Prediction": 6,
+  "Apple FHI Forecasting with ARIMA & LSTM": 8,
+  "British Airways Analysis": 6,
+  "Predicting Planets Habitability": 7,
+  "Parking Violation Risk Prediction": 9,
+};
+
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
@@ -183,7 +197,17 @@ export const PortfolioContent = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
             >
-              <ProjectBubbleChart projects={projects} categories={categories} active={active} />
+              <ProjectBubbleChart
+                projects={projects.map((p) => ({
+                  title: p.title,
+                  category: p.category,
+                  github: p.github,
+                  demo: p.demo,
+                  complexity: COMPLEXITY[p.title] ?? 6,
+                }))}
+                categories={categories}
+                active={active}
+              />
             </motion.div>
           ) : (
           <AnimatePresence mode="wait">
