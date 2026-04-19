@@ -120,6 +120,7 @@ const fadeUp = {
 
 export const PortfolioContent = () => {
   const [active, setActive] = useState("All");
+  const [view, setView] = useState<"grid" | "bubble">("grid");
 
   const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
@@ -133,7 +134,7 @@ export const PortfolioContent = () => {
             Here are some of my data science projects. Each project demonstrates my skills in different areas of data analysis, machine learning, and visualization.
           </motion.p>
 
-          <motion.div className="flex flex-wrap justify-center gap-3 mb-12" {...fadeUp} transition={{ delay: 0.2, duration: 0.5 }}>
+          <motion.div className="flex flex-wrap justify-center gap-3 mb-6" {...fadeUp} transition={{ delay: 0.2, duration: 0.5 }}>
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -144,11 +145,47 @@ export const PortfolioContent = () => {
               </button>
             ))}
           </motion.div>
+
+          {/* View toggle */}
+          <motion.div
+            className="inline-flex items-center gap-1 p-1 rounded-full border border-border bg-card mb-12"
+            {...fadeUp}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <button
+              onClick={() => setView("grid")}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                view === "grid" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-pressed={view === "grid"}
+            >
+              <LayoutGrid size={14} /> Grid
+            </button>
+            <button
+              onClick={() => setView("bubble")}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                view === "bubble" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-pressed={view === "bubble"}
+            >
+              <CircleDot size={14} /> Bubble
+            </button>
+          </motion.div>
         </div>
       </section>
 
       <section className="pb-20">
         <div className="container mx-auto px-6">
+          {view === "bubble" ? (
+            <motion.div
+              key="bubble"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              <ProjectBubbleChart projects={projects} categories={categories} active={active} />
+            </motion.div>
+          ) : (
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
