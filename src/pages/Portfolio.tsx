@@ -6,14 +6,14 @@ import Footer from "@/components/Footer";
 
 import imgWeapon from "@/assets/projects/weapon-detection.jpg";
 import imgTitanic from "@/assets/projects/titanic.jpg";
-import imgDocument from "@/assets/projects/document-nlp.jpg";
 import imgNeo from "@/assets/projects/neo-analysis.jpg";
-import imgEmail from "@/assets/projects/email-classification.jpg";
-import imgApple from "@/assets/projects/apple-forecasting.jpg";
 import imgBritish from "@/assets/projects/british-airways.jpg";
-import imgPlanets from "@/assets/projects/planets-habitability.jpg";
 import imgAutocop from "@/assets/projects/autocop.jpg";
 import imgParking from "@/assets/projects/parking-violation.jpg";
+import imgEmail from "@/assets/project-mailintel.png";
+import imgDocument from "@/assets/project-document-times.png";
+import imgApple from "@/assets/project-apple-fhi.png";
+import imgPlanets from "@/assets/project-astro-life.png";
 
 const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning", "NLP"];
 
