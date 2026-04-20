@@ -12,7 +12,7 @@ const DETECTIONS = [
 const ATTRS: { label: string; value: string; color?: string }[] = [
   { label: "identity", value: "Murtaza M.", color: "#3b82f6" },
   { label: "role", value: "Data Scientist", color: "#22c55e" },
-  { label: "keypoints", value: "5 / 5" },
+  { label: "age", value: "~24" },
   { label: "expression", value: "Friendly", color: "#22c55e" },
   { label: "location", value: "Rawalpindi, PK" },
   { label: "status", value: "Open to hire ✓", color: "#22c55e" },
@@ -176,76 +176,51 @@ const CVDetectionCard = () => {
               <Chip text="PERSON · 0.97" bg="#22c55e" position="top-1 left-1" />
             </div>
 
-            {/* FACE box */}
+            {/* FACE box — tight around full face */}
             <div
               className="absolute pointer-events-none"
               style={{
-                top: "6%",
-                bottom: "51%",
-                left: "16%",
-                right: "16%",
+                top: "8%",
+                height: "38%",
+                left: "26%",
+                right: "26%",
                 border: "2px solid #3b82f6",
+                borderRadius: "2px",
               }}
             >
-              {/* crosshair */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4">
-                <div className="absolute top-1/2 left-0 right-0 h-px bg-[#3b82f6]" />
-                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#3b82f6]" />
-              </div>
-              <Chip text="FACE · 0.94" bg="#3b82f6" fg="#0a0a0f" position="-bottom-4 left-0" />
+              <Chip text="FACE · 0.94" bg="#3b82f6" fg="#0a0a0f" position="-top-4 left-0" />
             </div>
 
-            {/* GLASSES box */}
+            {/* GLASSES box — tight on eyewear strip */}
             <div
               className="absolute pointer-events-none"
               style={{
-                top: "22%",
-                height: "10%",
-                left: "20%",
-                right: "20%",
+                top: "19%",
+                height: "7%",
+                left: "28%",
+                right: "28%",
                 border: "2px solid #f59e0b",
+                borderRadius: "2px",
               }}
             >
               <Chip text="GLASSES · 0.91" bg="#f59e0b" position="-top-4 right-0" />
             </div>
 
-            {/* SMILE box dashed */}
+            {/* SMILE box — tight on mouth, brighter + thicker */}
             <div
               className="absolute pointer-events-none"
               style={{
-                top: "38%",
-                height: "9%",
-                left: "30%",
-                right: "30%",
-                border: "2px dashed #ef4444",
+                top: "37%",
+                height: "5%",
+                left: "36%",
+                right: "36%",
+                border: "2.5px solid #ff2d55",
+                borderRadius: "2px",
+                boxShadow: "0 0 6px rgba(255,45,85,0.6)",
               }}
             >
-              <Chip text="SMILE · 0.88" bg="#ef4444" fg="#0a0a0f" position="-bottom-4 right-0" />
+              <Chip text="SMILE · 0.88" bg="#ff2d55" fg="#ffffff" position="-bottom-4 right-0" />
             </div>
-
-            {/* Keypoints + skeleton */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-              {/* skeleton lines */}
-              <g stroke="#f59e0b" strokeWidth="0.4" opacity="0.7">
-                <line x1="32" y1="27" x2="50" y2="34" />
-                <line x1="68" y1="27" x2="50" y2="34" />
-                <line x1="50" y1="34" x2="42" y2="42" />
-                <line x1="50" y1="34" x2="58" y2="42" />
-              </g>
-              {/* keypoints */}
-              {[
-                [32, 27],
-                [68, 27],
-                [50, 34],
-                [42, 42],
-                [58, 42],
-              ].map(([cx, cy], i) => (
-                <g key={i}>
-                  <circle cx={cx} cy={cy} r="1.8" fill="#f59e0b" opacity="0.3" />
-                  <circle cx={cx} cy={cy} r="0.9" fill="#f59e0b" />
-                </g>
-              ))}
-            </svg>
           </div>
 
           {/* Statusbar */}
