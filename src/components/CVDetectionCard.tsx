@@ -12,7 +12,7 @@ const DETECTIONS = [
 const ATTRS: { label: string; value: string; color?: string }[] = [
   { label: "identity", value: "Murtaza M.", color: "#3b82f6" },
   { label: "role", value: "Data Scientist", color: "#22c55e" },
-  { label: "keypoints", value: "5 / 5" },
+  { label: "age", value: "~24" },
   { label: "expression", value: "Friendly", color: "#22c55e" },
   { label: "location", value: "Rawalpindi, PK" },
   { label: "status", value: "Open to hire ✓", color: "#22c55e" },
