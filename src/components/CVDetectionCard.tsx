@@ -170,53 +170,56 @@ const CVDetectionCard = () => {
               }}
             />
 
-            {/* PERSON box (whole) */}
-            <div className="absolute inset-0 pointer-events-none" style={{ border: "2px solid #22c55e" }}>
+            {/* PERSON box (whole) — z:1 */}
+            <div className="absolute inset-0 pointer-events-none" style={{ border: "2px solid #22c55e", zIndex: 1 }}>
               <Corners color="#22c55e" />
               <Chip text="PERSON · 0.97" bg="#22c55e" position="top-1 left-1" />
             </div>
 
-            {/* FACE box — tight around full face */}
+            {/* FACE box — forehead → chin, cheeks. z:2 */}
             <div
               className="absolute pointer-events-none"
               style={{
-                top: "8%",
-                height: "38%",
-                left: "26%",
-                right: "26%",
+                top: "14%",
+                height: "49%",
+                left: "29%",
+                right: "28%",
                 border: "2px solid #3b82f6",
                 borderRadius: "2px",
+                zIndex: 2,
               }}
             >
               <Chip text="FACE · 0.94" bg="#3b82f6" fg="#0a0a0f" position="-top-4 left-0" />
             </div>
 
-            {/* GLASSES box — tight on eyewear strip */}
+            {/* GLASSES box — frame only, inside face. z:3 */}
             <div
               className="absolute pointer-events-none"
               style={{
-                top: "19%",
-                height: "7%",
-                left: "28%",
-                right: "28%",
+                top: "28%",
+                height: "13%",
+                left: "36%",
+                right: "30%",
                 border: "2px solid #f59e0b",
                 borderRadius: "2px",
+                zIndex: 3,
               }}
             >
               <Chip text="GLASSES · 0.91" bg="#f59e0b" position="-top-4 right-0" />
             </div>
 
-            {/* SMILE box — tight on mouth, brighter + thicker */}
+            {/* SMILE box — lips only, top layer, max contrast. z:10 */}
             <div
               className="absolute pointer-events-none"
               style={{
-                top: "37%",
-                height: "5%",
-                left: "36%",
-                right: "36%",
-                border: "2.5px solid #ff2d55",
+                top: "51%",
+                height: "8%",
+                left: "44%",
+                right: "38%",
+                border: "3px solid #ff2d55",
                 borderRadius: "2px",
-                boxShadow: "0 0 6px rgba(255,45,85,0.6)",
+                boxShadow: "0 0 10px rgba(255,45,85,0.85)",
+                zIndex: 10,
               }}
             >
               <Chip text="SMILE · 0.88" bg="#ff2d55" fg="#ffffff" position="-bottom-4 right-0" />
