@@ -5,7 +5,7 @@ import profileImg from "@/assets/murtaza-profile.png";
 import NeuralNetworkBg from "@/components/NeuralNetworkBg";
 import TypewriterTitle from "@/components/TypewriterTitle";
 import StatCounter from "@/components/StatCounter";
-import TechTicker from "@/components/TechTicker";
+
 
 const GithubIcon = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -198,10 +198,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Scrolling tech stack ticker */}
-      <div className="absolute bottom-0 left-0 right-0 z-10">
-        <TechTicker />
-      </div>
     </section>
   );
 };

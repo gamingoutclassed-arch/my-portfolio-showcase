@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import CVDetectionCard from "@/components/CVDetectionCard";
 import SkillRadarChart from "@/components/SkillRadarChart";
 import CareerScatterChart from "@/components/CareerScatterChart";
+import TechTicker from "@/components/TechTicker";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -35,13 +36,16 @@ export const AboutContent = () => {
         </div>
       </section>
 
-      {/* Skill Radar */}
+      {/* Skill Radar + Tech Ticker */}
       <section className="pb-20">
         <div className="container mx-auto px-6">
           <motion.h2 className="section-heading text-center" {...fadeUp}>Skill Radar</motion.h2>
           <div className="section-divider" />
           <motion.div className="max-w-3xl mx-auto" {...fadeUp}>
             <SkillRadarChart />
+          </motion.div>
+          <motion.div className="max-w-5xl mx-auto mt-8" {...fadeUp}>
+            <TechTicker />
           </motion.div>
         </div>
       </section>
