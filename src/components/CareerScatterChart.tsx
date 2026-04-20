@@ -17,13 +17,68 @@ interface Role {
   y: number;
   color: string;
   current?: boolean;
+  stack: string;
+  bullets: string[];
 }
 
 const ROLES: Role[] = [
-  { title: "Content Writer", company: "Xerosector", period: "Jul 2022 – Aug 2022", x: 2022.5, y: 1, color: "#64748b" },
-  { title: "LLM Task Trainer", company: "Turing", period: "2024", x: 2024.0, y: 2, color: "#8b5cf6" },
-  { title: "Data Science Intern", company: "ITSOLERA Pvt. Ltd.", period: "Jul 2025 – Sep 2025", x: 2025.6, y: 3, color: "#3b82f6" },
-  { title: "CV & AI Intern", company: "Scoutrex", period: "Dec 2025 – Feb 2026", x: 2025.9, y: 4, color: "#22c55e", current: true },
+  {
+    title: "Content Writer",
+    company: "Xerosector Technologies",
+    period: "Jul 2022 – Aug 2022",
+    x: 2022.6,
+    y: 1,
+    color: "#64748b",
+    stack: "WordPress · SEO · Keyword Research",
+    bullets: [
+      "Created 50+ SEO-optimized product descriptions",
+      "Boosted organic traffic by 15% via keyword optimization",
+      "Aligned copy with brand strategy across pages",
+    ],
+  },
+  {
+    title: "LLM Task Trainer",
+    company: "Turing",
+    period: "2025",
+    x: 2025.2,
+    y: 2,
+    color: "#8b5cf6",
+    stack: "Prompt Engineering · RLHF · Tool Use",
+    bullets: [
+      "Engineered system/user prompts and multi-step task chains",
+      "Integrated external API tools (Search, News, Yelp) with temporal logic",
+      "Mitigated hallucinations via rigorous RLHF evaluation",
+    ],
+  },
+  {
+    title: "Data Science Intern",
+    company: "ITSOLERA Pvt. Ltd.",
+    period: "Jul 2025 – Sep 2025",
+    x: 2025.6,
+    y: 3,
+    color: "#3b82f6",
+    stack: "Python · Pandas · Scikit-Learn · Streamlit · Plotly",
+    bullets: [
+      "Improved time-series forecast accuracy by 15% (LSTM, ARIMA, XGBoost, RF)",
+      "Built interactive Streamlit dashboards for KPIs & predictions",
+      "Developed end-to-end ML pipelines on real-world structured datasets",
+    ],
+  },
+  {
+    title: "Computer Vision & AI Intern",
+    company: "Scoutrex",
+    period: "Dec 2025 – Feb 2026",
+    x: 2025.95,
+    y: 4,
+    color: "#22c55e",
+    current: true,
+    stack: "PyTorch · OpenCV · MediaPipe · Roboflow",
+    bullets: [
+      "Optimized PyTorch models for cricket video analysis under motion blur",
+      "Implemented MediaPipe pose extraction for biomechanical analysis",
+      "Built action phase segmentation pipeline for bowling stages",
+    ],
+  },
 ];
 
 const CareerScatterChart = () => {
