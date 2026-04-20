@@ -191,11 +191,12 @@ const CareerScatterChart = () => {
           <div
             className="absolute pointer-events-none rounded-md p-3 z-10 shadow-xl"
             style={{
-              left: Math.min(hover.x + 12, 300),
-              top: Math.max(hover.y - 70, 0),
+              left: Math.min(hover.x + 12, 280),
+              top: Math.max(hover.y - 90, 0),
               background: "#0a0a0f",
               border: `1px solid ${hover.role.color}`,
-              minWidth: 180,
+              minWidth: 220,
+              maxWidth: 280,
             }}
           >
             <div className="text-sm font-bold text-white">{hover.role.title}</div>
@@ -208,17 +209,38 @@ const CareerScatterChart = () => {
         )}
       </div>
 
-      {/* Static legend below */}
-      <div className="flex flex-wrap justify-center gap-2 mt-4">
+      {/* Role detail cards — always visible, with descriptions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
         {ROLES.map((r) => (
-          <span
+          <div
             key={r.title}
-            className="text-[10px] font-mono px-2 py-1 rounded flex items-center gap-1.5"
-            style={{ background: "#0f172a", border: "1px solid #1e293b", color: "#cbd5e1" }}
+            className="rounded-lg p-3"
+            style={{
+              background: "#0f172a",
+              border: `1px solid ${r.current ? r.color : "#1e293b"}`,
+            }}
           >
-            <span className="w-2 h-2 rounded-full" style={{ background: r.color }} />
-            {r.company} · {Math.floor(r.x)}
-          </span>
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: r.color, boxShadow: r.current ? `0 0 8px ${r.color}` : "none" }} />
+                <div className="text-sm font-semibold text-white truncate">{r.title}</div>
+              </div>
+              {r.current && (
+                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>● CURRENT</span>
+              )}
+            </div>
+            <div className="text-xs text-slate-400">{r.company}</div>
+            <div className="text-[10px] font-mono mt-0.5" style={{ color: "#3b82f6" }}>{r.period}</div>
+            <div className="text-[10px] font-mono mt-1.5" style={{ color: "#64748b" }}>{r.stack}</div>
+            <ul className="mt-2 space-y-1">
+              {r.bullets.map((b, i) => (
+                <li key={i} className="text-[11px] text-slate-300 leading-snug flex gap-1.5">
+                  <span style={{ color: r.color }}>▸</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
     </div>
