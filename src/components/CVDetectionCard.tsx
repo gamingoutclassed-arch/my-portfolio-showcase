@@ -91,7 +91,7 @@ const DETECTIONS: Detection[] = [
 const ATTRS: { label: string; value: string; color?: string }[] = [
   { label: "identity", value: "Murtaza M.", color: "#3b82f6" },
   { label: "role", value: "Data Scientist", color: "#22c55e" },
-  { label: "age", value: "~24" },
+  { label: "age", value: "~23" },
   { label: "expression", value: "Friendly", color: "#22c55e" },
   { label: "location", value: "Rawalpindi, PK" },
   { label: "status", value: "Open to hire ✓", color: "#22c55e" },
