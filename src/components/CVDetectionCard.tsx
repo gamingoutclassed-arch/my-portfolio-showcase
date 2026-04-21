@@ -398,28 +398,31 @@ const CVDetectionCard = () => {
               if (!shownBoxes[d.key]) return null;
               const isPerson = d.key === "PERSON";
               const r = rects[d.key];
+              const j = calibrate ? { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 } : jitter[d.key];
               const handleSize = 10;
+              const liveConf = Math.max(0, Math.min(1, animatedConf[d.key] + j.conf));
               return (
                 <div
                   key={d.key}
                   className={`absolute ${calibrate ? "cursor-move" : "pointer-events-none"} animate-in fade-in duration-300`}
                   onPointerDown={(e) => onPointerDown(e, d.key, "move")}
                   style={{
-                    top: `${r.top}%`,
-                    left: `${r.left}%`,
-                    width: `${r.width}%`,
-                    height: `${r.height}%`,
+                    top: `${r.top + j.dy}%`,
+                    left: `${r.left + j.dx}%`,
+                    width: `${r.width + j.dw}%`,
+                    height: `${r.height + j.dh}%`,
                     border: `${d.borderWidth}px solid ${d.color}`,
                     borderRadius: "2px",
                     boxShadow: d.glow,
                     zIndex: d.z + (calibrate ? 20 : 0),
                     background: calibrate ? `${d.color}22` : "transparent",
                     touchAction: calibrate ? "none" : "auto",
+                    transition: calibrate ? "none" : "top 200ms ease-out, left 200ms ease-out, width 200ms ease-out, height 200ms ease-out",
                   }}
                 >
                   {isPerson && !calibrate && <Corners color={d.color} />}
                   <Chip
-                    text={`${d.label} · ${animatedConf[d.key].toFixed(2)}`}
+                    text={`${d.label} · ${liveConf.toFixed(2)}`}
                     bg={d.color}
                     fg={d.chipFg}
                     position={d.chipPos}
