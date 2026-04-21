@@ -46,10 +46,10 @@ const DETECTIONS: Detection[] = [
     conf: 0.94,
     color: "#3b82f6",
     // calibrated from manual annotation
-    top: 0,
-    left: 29.7,
-    width: 37.5,
-    height: 44.2,
+    top: 7.5,
+    left: 29.9,
+    width: 45.2,
+    height: 48.4,
     z: 2,
     borderWidth: 2,
     chipPos: "-top-4 left-0",
@@ -61,10 +61,10 @@ const DETECTIONS: Detection[] = [
     label: "GLASSES",
     conf: 0.91,
     color: "#f59e0b",
-    top: 16.7,
-    left: 34.1,
-    width: 29.1,
-    height: 9.4,
+    top: 27.0,
+    left: 37.0,
+    width: 32.9,
+    height: 10.0,
     z: 3,
     borderWidth: 2,
     chipPos: "-top-4 right-0",
@@ -75,9 +75,9 @@ const DETECTIONS: Detection[] = [
     label: "SMILE",
     conf: 0.88,
     color: "#ff2d55",
-    top: 29.5,
-    left: 39.2,
-    width: 17.9,
+    top: 40.4,
+    left: 40.6,
+    width: 23.3,
     height: 5.8,
     z: 10,
     borderWidth: 3,
@@ -270,15 +270,29 @@ const CVDetectionCard = () => {
     return () => timeouts.forEach(clearTimeout);
   }, [calibrate]);
 
-  // Live frame counter + jittered fps/latency for "real-time" feel
+  // Live frame counter + jitter for "real-time" feel
+  const [jitter, setJitter] = useState<Record<DetKey, { dx: number; dy: number; dw: number; dh: number; conf: number }>>({
+    PERSON: { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 },
+    FACE: { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 },
+    GLASSES: { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 },
+    SMILE: { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 },
+  });
+
   useEffect(() => {
     const id = window.setInterval(() => {
       setFrame((f) => f + 1);
       setFps(28 + Math.random() * 2);
       setLatency(32 + Math.random() * 6);
-    }, 120);
+      if (calibrate) return;
+      setJitter({
+        PERSON: { dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3, dw: (Math.random() - 0.5) * 0.4, dh: (Math.random() - 0.5) * 0.4, conf: (Math.random() - 0.5) * 0.02 },
+        FACE: { dx: (Math.random() - 0.5) * 0.6, dy: (Math.random() - 0.5) * 0.6, dw: (Math.random() - 0.5) * 0.8, dh: (Math.random() - 0.5) * 0.8, conf: (Math.random() - 0.5) * 0.04 },
+        GLASSES: { dx: (Math.random() - 0.5) * 0.8, dy: (Math.random() - 0.5) * 0.8, dw: (Math.random() - 0.5) * 1.0, dh: (Math.random() - 0.5) * 0.8, conf: (Math.random() - 0.5) * 0.05 },
+        SMILE: { dx: (Math.random() - 0.5) * 1.0, dy: (Math.random() - 0.5) * 1.0, dw: (Math.random() - 0.5) * 1.2, dh: (Math.random() - 0.5) * 1.0, conf: (Math.random() - 0.5) * 0.06 },
+      });
+    }, 200);
     return () => clearInterval(id);
-  }, []);
+  }, [calibrate]);
 
   // typewriter inference log
   useEffect(() => {
@@ -384,28 +398,31 @@ const CVDetectionCard = () => {
               if (!shownBoxes[d.key]) return null;
               const isPerson = d.key === "PERSON";
               const r = rects[d.key];
+              const j = calibrate ? { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 } : jitter[d.key];
               const handleSize = 10;
+              const liveConf = Math.max(0, Math.min(1, animatedConf[d.key] + j.conf));
               return (
                 <div
                   key={d.key}
                   className={`absolute ${calibrate ? "cursor-move" : "pointer-events-none"} animate-in fade-in duration-300`}
                   onPointerDown={(e) => onPointerDown(e, d.key, "move")}
                   style={{
-                    top: `${r.top}%`,
-                    left: `${r.left}%`,
-                    width: `${r.width}%`,
-                    height: `${r.height}%`,
+                    top: `${r.top + j.dy}%`,
+                    left: `${r.left + j.dx}%`,
+                    width: `${r.width + j.dw}%`,
+                    height: `${r.height + j.dh}%`,
                     border: `${d.borderWidth}px solid ${d.color}`,
                     borderRadius: "2px",
                     boxShadow: d.glow,
                     zIndex: d.z + (calibrate ? 20 : 0),
                     background: calibrate ? `${d.color}22` : "transparent",
                     touchAction: calibrate ? "none" : "auto",
+                    transition: calibrate ? "none" : "top 200ms ease-out, left 200ms ease-out, width 200ms ease-out, height 200ms ease-out",
                   }}
                 >
                   {isPerson && !calibrate && <Corners color={d.color} />}
                   <Chip
-                    text={`${d.label} · ${animatedConf[d.key].toFixed(2)}`}
+                    text={`${d.label} · ${liveConf.toFixed(2)}`}
                     bg={d.color}
                     fg={d.chipFg}
                     position={d.chipPos}
@@ -480,7 +497,9 @@ const CVDetectionCard = () => {
               // detections · {Object.values(shownBoxes).filter(Boolean).length}/4 objects
             </div>
             <div className="space-y-2.5">
-              {DETECTIONS.map((d) => (
+              {DETECTIONS.map((d) => {
+                const live = Math.max(0, Math.min(1, animatedConf[d.key] + (calibrate ? 0 : jitter[d.key].conf)));
+                return (
                 <div key={d.label} style={{ opacity: shownBoxes[d.key] ? 1 : 0.3 }} className="transition-opacity">
                   <div className="flex items-center justify-between text-xs font-mono mb-1">
                     <div className="flex items-center gap-2">
@@ -493,19 +512,20 @@ const CVDetectionCard = () => {
                       />
                       <span className="text-slate-200">{d.label}</span>
                     </div>
-                    <span style={{ color: d.color }}>{animatedConf[d.key].toFixed(2)}</span>
+                    <span style={{ color: d.color }}>{live.toFixed(2)}</span>
                   </div>
                   <div className="h-1 rounded-full overflow-hidden" style={{ background: "#1e293b" }}>
                     <div
-                      className="h-full"
+                      className="h-full transition-all duration-200"
                       style={{
-                        width: `${animatedConf[d.key] * 100}%`,
+                        width: `${live * 100}%`,
                         background: d.color,
                       }}
                     />
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
