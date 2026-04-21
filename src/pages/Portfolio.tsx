@@ -35,7 +35,7 @@ const projects = [
     category: "Deep Learning",
     image: imgWeapon,
     github: "https://github.com/MurtazaMajid/Sentinel-AI-Real-Time-Weapon-Detection-System-",
-    demo: "sentinel-ai-real-time-weapon-detection.vercel.app",
+    demo: "https://sentinel-ai-real-time-weapon-detection.vercel.app",
   },
   {
     title: "Gmail Email Classification Pipeline",
