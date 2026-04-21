@@ -164,14 +164,98 @@ const CVDetectionCard = () => {
   const [fps, setFps] = useState(28.4);
   const [latency, setLatency] = useState(34.7);
   const cardRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
+
+  // ===== Calibration mode =====
+  type BoxRect = { top: number; left: number; width: number; height: number };
+  const [calibrate, setCalibrate] = useState(false);
+  const [rects, setRects] = useState<Record<DetKey, BoxRect>>(() => {
+    const init = {} as Record<DetKey, BoxRect>;
+    DETECTIONS.forEach((d) => {
+      init[d.key] = { top: d.top, left: d.left, width: d.width, height: d.height };
+    });
+    return init;
+  });
+
+  const onPointerDown = (
+    e: React.PointerEvent,
+    key: DetKey,
+    mode: "move" | "nw" | "ne" | "sw" | "se"
+  ) => {
+    if (!calibrate || !photoRef.current) return;
+    e.stopPropagation();
+    e.preventDefault();
+    const photoRect = photoRef.current.getBoundingClientRect();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const start = { ...rects[key] };
+    try { (e.target as Element).setPointerCapture?.(e.pointerId); } catch {}
+
+    const onMove = (ev: PointerEvent) => {
+      const dxPct = ((ev.clientX - startX) / photoRect.width) * 100;
+      const dyPct = ((ev.clientY - startY) / photoRect.height) * 100;
+      setRects((r) => {
+        const next = { ...start };
+        if (mode === "move") {
+          next.left = Math.max(0, Math.min(100 - start.width, start.left + dxPct));
+          next.top = Math.max(0, Math.min(100 - start.height, start.top + dyPct));
+        } else if (mode === "se") {
+          next.width = Math.max(2, Math.min(100 - start.left, start.width + dxPct));
+          next.height = Math.max(2, Math.min(100 - start.top, start.height + dyPct));
+        } else if (mode === "nw") {
+          const w = Math.max(2, start.width - dxPct);
+          const h = Math.max(2, start.height - dyPct);
+          next.left = start.left + (start.width - w);
+          next.top = start.top + (start.height - h);
+          next.width = w;
+          next.height = h;
+        } else if (mode === "ne") {
+          next.width = Math.max(2, start.width + dxPct);
+          const h = Math.max(2, start.height - dyPct);
+          next.top = start.top + (start.height - h);
+          next.height = h;
+        } else if (mode === "sw") {
+          const w = Math.max(2, start.width - dxPct);
+          next.left = start.left + (start.width - w);
+          next.width = w;
+          next.height = Math.max(2, start.height + dyPct);
+        }
+        return { ...r, [key]: next };
+      });
+    };
+    const onUp = () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  };
+
+  const copyCoords = () => {
+    const out = (Object.keys(rects) as DetKey[])
+      .map((k) => {
+        const r = rects[k];
+        return `${k}: top: ${r.top.toFixed(1)}, left: ${r.left.toFixed(1)}, width: ${r.width.toFixed(1)}, height: ${r.height.toFixed(1)},`;
+      })
+      .join("\n");
+    navigator.clipboard?.writeText(out).catch(() => {});
+    console.log("[calibration coords]\n" + out);
+    alert("Coords copied to clipboard & logged to console:\n\n" + out);
+  };
 
   // Reveal boxes sequentially + animate confidence per box
   useEffect(() => {
+    if (calibrate) {
+      setShownBoxes({ PERSON: true, FACE: true, GLASSES: true, SMILE: true });
+      const full = {} as Record<DetKey, number>;
+      DETECTIONS.forEach((d) => (full[d.key] = d.conf));
+      setAnimatedConf(full);
+      return;
+    }
     const timeouts: number[] = [];
     DETECTIONS.forEach((d) => {
       const t1 = window.setTimeout(() => {
         setShownBoxes((s) => ({ ...s, [d.key]: true }));
-        // ramp confidence
         const start = performance.now();
         const dur = 700;
         const tick = () => {
@@ -184,7 +268,7 @@ const CVDetectionCard = () => {
       timeouts.push(t1);
     });
     return () => timeouts.forEach(clearTimeout);
-  }, []);
+  }, [calibrate]);
 
   // Live frame counter + jittered fps/latency for "real-time" feel
   useEffect(() => {
@@ -250,6 +334,7 @@ const CVDetectionCard = () => {
 
           {/* Photo box */}
           <div
+            ref={photoRef}
             className="relative mx-auto"
             style={{ width: 200, height: 265, background: "#050810" }}
           >
@@ -269,19 +354,22 @@ const CVDetectionCard = () => {
               src={profileImg}
               alt="Murtaza Majid"
               className="absolute inset-0 w-full h-full object-cover object-top"
+              draggable={false}
             />
 
             {/* scan line */}
-            <div
-              className="absolute left-0 right-0 h-[2px] pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, #22c55e 50%, transparent)",
-                boxShadow: "0 0 12px #22c55e",
-                animation: "scan-y 3s linear infinite",
-                zIndex: 4,
-              }}
-            />
+            {!calibrate && (
+              <div
+                className="absolute left-0 right-0 h-[2px] pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, #22c55e 50%, transparent)",
+                  boxShadow: "0 0 12px #22c55e",
+                  animation: "scan-y 3s linear infinite",
+                  zIndex: 4,
+                }}
+              />
+            )}
 
             {/* crosshair reticle (subtle) */}
             <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 5 }}>
@@ -291,32 +379,61 @@ const CVDetectionCard = () => {
               <div className="absolute bottom-2 right-2 text-[8px] font-mono text-green-500/70">+</div>
             </div>
 
-            {/* Detection boxes — rendered sequentially */}
+            {/* Detection boxes */}
             {DETECTIONS.map((d) => {
               if (!shownBoxes[d.key]) return null;
               const isPerson = d.key === "PERSON";
+              const r = rects[d.key];
+              const handleSize = 10;
               return (
                 <div
                   key={d.key}
-                  className="absolute pointer-events-none animate-in fade-in duration-300"
+                  className={`absolute ${calibrate ? "cursor-move" : "pointer-events-none"} animate-in fade-in duration-300`}
+                  onPointerDown={(e) => onPointerDown(e, d.key, "move")}
                   style={{
-                    top: `${d.top}%`,
-                    left: `${d.left}%`,
-                    width: `${d.width}%`,
-                    height: `${d.height}%`,
+                    top: `${r.top}%`,
+                    left: `${r.left}%`,
+                    width: `${r.width}%`,
+                    height: `${r.height}%`,
                     border: `${d.borderWidth}px solid ${d.color}`,
                     borderRadius: "2px",
                     boxShadow: d.glow,
-                    zIndex: d.z,
+                    zIndex: d.z + (calibrate ? 20 : 0),
+                    background: calibrate ? `${d.color}22` : "transparent",
+                    touchAction: calibrate ? "none" : "auto",
                   }}
                 >
-                  {isPerson && <Corners color={d.color} />}
+                  {isPerson && !calibrate && <Corners color={d.color} />}
                   <Chip
                     text={`${d.label} · ${animatedConf[d.key].toFixed(2)}`}
                     bg={d.color}
                     fg={d.chipFg}
                     position={d.chipPos}
                   />
+                  {calibrate && (["nw", "ne", "sw", "se"] as const).map((corner) => {
+                    const pos: React.CSSProperties = {
+                      position: "absolute",
+                      width: handleSize,
+                      height: handleSize,
+                      background: d.color,
+                      border: "1px solid #fff",
+                      borderRadius: 2,
+                      cursor: `${corner}-resize`,
+                      touchAction: "none",
+                      zIndex: 50,
+                    };
+                    if (corner === "nw") { pos.top = -handleSize / 2; pos.left = -handleSize / 2; }
+                    if (corner === "ne") { pos.top = -handleSize / 2; pos.right = -handleSize / 2; }
+                    if (corner === "sw") { pos.bottom = -handleSize / 2; pos.left = -handleSize / 2; }
+                    if (corner === "se") { pos.bottom = -handleSize / 2; pos.right = -handleSize / 2; }
+                    return (
+                      <div
+                        key={corner}
+                        style={pos}
+                        onPointerDown={(e) => onPointerDown(e, d.key, corner)}
+                      />
+                    );
+                  })}
                 </div>
               );
             })}
@@ -328,6 +445,30 @@ const CVDetectionCard = () => {
               f:{String(frame).padStart(4, "0")} · {latency.toFixed(1)}ms
             </span>
             <span className="text-green-500 whitespace-nowrap">● LIVE · {fps.toFixed(1)} FPS</span>
+          </div>
+
+          {/* Calibration controls */}
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              onClick={() => setCalibrate((c) => !c)}
+              className="text-[10px] font-mono px-2 py-1 rounded"
+              style={{
+                background: calibrate ? "#3b82f6" : "#0f172a",
+                color: calibrate ? "#fff" : "#94a3b8",
+                border: "1px solid #1e293b",
+              }}
+            >
+              {calibrate ? "✓ CALIBRATING" : "⚙ CALIBRATE"}
+            </button>
+            {calibrate && (
+              <button
+                onClick={copyCoords}
+                className="text-[10px] font-mono px-2 py-1 rounded"
+                style={{ background: "#22c55e", color: "#0a0a0f", border: "1px solid #1e293b" }}
+              >
+                COPY COORDS
+              </button>
+            )}
           </div>
         </div>
 
