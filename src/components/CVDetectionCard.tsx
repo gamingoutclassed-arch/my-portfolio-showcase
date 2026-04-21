@@ -2,11 +2,92 @@ import { useEffect, useRef, useState } from "react";
 import { Download, Eye } from "lucide-react";
 import profileImg from "@/assets/murtaza-profile.png";
 
-const DETECTIONS = [
-  { label: "PERSON", conf: 0.97, color: "#22c55e" },
-  { label: "FACE", conf: 0.94, color: "#3b82f6" },
-  { label: "GLASSES", conf: 0.91, color: "#f59e0b" },
-  { label: "SMILE", conf: 0.88, color: "#ef4444" },
+type DetKey = "PERSON" | "FACE" | "GLASSES" | "SMILE";
+
+interface Detection {
+  key: DetKey;
+  label: string;
+  conf: number;
+  color: string;
+  // box coords in % of the photo container
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+  z: number;
+  borderWidth: number;
+  glow?: string;
+  chipPos: string; // tailwind classes
+  chipFg?: string;
+  // appearance order in ms
+  appearAt: number;
+}
+
+// Coordinates calibrated against the profile photo rendered with object-cover object-top
+// inside a 200x265 box. Mirrors the reference image the user provided.
+const DETECTIONS: Detection[] = [
+  {
+    key: "PERSON",
+    label: "PERSON",
+    conf: 0.97,
+    color: "#22c55e",
+    top: 0,
+    left: 0,
+    width: 100,
+    height: 100,
+    z: 1,
+    borderWidth: 2,
+    chipPos: "top-1 left-1",
+    appearAt: 200,
+  },
+  {
+    key: "FACE",
+    label: "FACE",
+    conf: 0.94,
+    color: "#3b82f6",
+    // forehead → jaw, cheek → cheek
+    top: 6,
+    left: 36,
+    width: 30,
+    height: 38,
+    z: 2,
+    borderWidth: 2,
+    chipPos: "-top-4 left-0",
+    chipFg: "#0a0a0f",
+    appearAt: 600,
+  },
+  {
+    key: "GLASSES",
+    label: "GLASSES",
+    conf: 0.91,
+    color: "#f59e0b",
+    // tight on frames
+    top: 18,
+    left: 39,
+    width: 24,
+    height: 7,
+    z: 3,
+    borderWidth: 2,
+    chipPos: "-top-4 right-0",
+    appearAt: 1000,
+  },
+  {
+    key: "SMILE",
+    label: "SMILE",
+    conf: 0.88,
+    color: "#ff2d55",
+    // tight on lips
+    top: 31,
+    left: 44,
+    width: 13,
+    height: 4.5,
+    z: 10,
+    borderWidth: 3,
+    glow: "0 0 10px rgba(255,45,85,0.9)",
+    chipPos: "-bottom-4 right-0",
+    chipFg: "#ffffff",
+    appearAt: 1400,
+  },
 ];
 
 const ATTRS: { label: string; value: string; color?: string }[] = [
@@ -19,35 +100,30 @@ const ATTRS: { label: string; value: string; color?: string }[] = [
 ];
 
 const LOG_LINES: { text: string; color?: string }[] = [
-  { text: "[init] model loaded" },
-  { text: "[img]  675×506 · RGB" },
-  { text: "[pre]  normalising" },
-  { text: "[det]  PERSON  0.97 ✓", color: "#22c55e" },
-  { text: "[det]  FACE    0.94 ✓", color: "#3b82f6" },
-  { text: "[det]  GLASSES 0.91", color: "#f59e0b" },
-  { text: "[det]  SMILE   0.88", color: "#ef4444" },
-  { text: "[kpt]  5 landmarks OK", color: "#f59e0b" },
-  { text: "[nms]  iou=0.45 applied" },
-  { text: "[done] 34.7ms · 28.4fps ✓", color: "#22c55e" },
+  { text: "[init] loading weights portrait_det_v2.pt" },
+  { text: "[init] cuda:0 ready · 11.4GB free", color: "#22c55e" },
+  { text: "[cap]  frame 0001 · 675×506 RGB" },
+  { text: "[pre]  resize→640 · normalise [0,1]" },
+  { text: "[fwd]  forward pass · 12.3ms" },
+  { text: "[det]  PERSON  0.97  bbox(0,0,675,506)", color: "#22c55e" },
+  { text: "[det]  FACE    0.94  bbox(243,30,202,192)", color: "#3b82f6" },
+  { text: "[det]  GLASSES 0.91  bbox(263,90,162,35)", color: "#f59e0b" },
+  { text: "[det]  SMILE   0.88  bbox(297,156,88,23)", color: "#ff2d55" },
+  { text: "[nms]  iou=0.45 · 4 kept" },
+  { text: "[post] 34.7ms · 28.4 fps ✓", color: "#22c55e" },
 ];
 
-// L-shaped corner ticks
-const Corners = ({ color }: { color: string }) => {
+// Bracket-style corner ticks (replaces full-rect L corners look)
+const Corners = ({ color, size = 12 }: { color: string; size?: number }) => {
   const t = 2;
-  const len = 14;
-  const common = { stroke: color, strokeWidth: t, fill: "none" };
+  const common = { stroke: color, strokeWidth: t, fill: "none", strokeLinecap: "square" as const };
   return (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-      {/* Using percentage paths */}
+    <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
       <g {...common}>
-        {/* top-left */}
-        <path d={`M0 ${len} L0 0 L${len} 0`} />
-        {/* top-right */}
-        <path d={`M${100 - len} 0 L100 0 L100 ${len}`} />
-        {/* bottom-left */}
-        <path d={`M0 ${100 - len} L0 100 L${len} 100`} />
-        {/* bottom-right */}
-        <path d={`M${100 - len} 100 L100 100 L100 ${100 - len}`} />
+        <path d={`M0 ${size} L0 0 L${size} 0`} />
+        <path d={`M${100 - size} 0 L100 0 L100 ${size}`} />
+        <path d={`M0 ${100 - size} L0 100 L${size} 100`} />
+        <path d={`M${100 - size} 100 L100 100 L100 ${100 - size}`} />
       </g>
     </svg>
   );
@@ -65,29 +141,67 @@ const Chip = ({
   position: string;
 }) => (
   <span
-    className={`absolute ${position} text-[10px] font-bold px-1.5 py-0.5 font-mono tracking-wide whitespace-nowrap`}
-    style={{ background: bg, color: fg }}
+    className={`absolute ${position} text-[9px] font-bold px-1.5 py-[1px] font-mono tracking-wide whitespace-nowrap rounded-sm`}
+    style={{ background: bg, color: fg, lineHeight: 1.4 }}
   >
     {text}
   </span>
 );
 
 const CVDetectionCard = () => {
-  const [logIdx, setLogIdx] = useState(0);
   const [visibleLogs, setVisibleLogs] = useState<typeof LOG_LINES>([]);
-  const [animatedConf, setAnimatedConf] = useState(false);
+  const [animatedConf, setAnimatedConf] = useState<Record<DetKey, number>>({
+    PERSON: 0,
+    FACE: 0,
+    GLASSES: 0,
+    SMILE: 0,
+  });
+  const [shownBoxes, setShownBoxes] = useState<Record<DetKey, boolean>>({
+    PERSON: false,
+    FACE: false,
+    GLASSES: false,
+    SMILE: false,
+  });
+  const [frame, setFrame] = useState(1);
+  const [fps, setFps] = useState(28.4);
+  const [latency, setLatency] = useState(34.7);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // animate confidence bars on mount
+  // Reveal boxes sequentially + animate confidence per box
   useEffect(() => {
-    const t = setTimeout(() => setAnimatedConf(true), 200);
-    return () => clearTimeout(t);
+    const timeouts: number[] = [];
+    DETECTIONS.forEach((d) => {
+      const t1 = window.setTimeout(() => {
+        setShownBoxes((s) => ({ ...s, [d.key]: true }));
+        // ramp confidence
+        const start = performance.now();
+        const dur = 700;
+        const tick = () => {
+          const p = Math.min(1, (performance.now() - start) / dur);
+          setAnimatedConf((c) => ({ ...c, [d.key]: d.conf * p }));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }, d.appearAt);
+      timeouts.push(t1);
+    });
+    return () => timeouts.forEach(clearTimeout);
   }, []);
 
-  // typewriter log
+  // Live frame counter + jittered fps/latency for "real-time" feel
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setFrame((f) => f + 1);
+      setFps(28 + Math.random() * 2);
+      setLatency(32 + Math.random() * 6);
+    }, 120);
+    return () => clearInterval(id);
+  }, []);
+
+  // typewriter inference log
   useEffect(() => {
     let cancelled = false;
-    let timeouts: number[] = [];
+    const timeouts: number[] = [];
 
     const run = () => {
       setVisibleLogs([]);
@@ -104,7 +218,7 @@ const CVDetectionCard = () => {
             }, 2200);
             timeouts.push(restart);
           }
-        }, i * 280);
+        }, i * 260);
         timeouts.push(id);
       });
     };
@@ -128,12 +242,12 @@ const CVDetectionCard = () => {
           <div className="flex items-center justify-between text-[10px] font-mono mb-2 gap-2">
             <div className="flex items-center gap-2 min-w-0">
               <span className="relative flex w-2 h-2 shrink-0">
-                <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75" />
-                <span className="relative w-2 h-2 rounded-full bg-green-500" />
+                <span className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-75" />
+                <span className="relative w-2 h-2 rounded-full bg-red-500" />
               </span>
-              <span className="text-slate-300 truncate">detect.py · murtaza_profile.png</span>
+              <span className="text-slate-300 truncate">REC · webcam_0.mp4</span>
             </div>
-            <span className="text-slate-500 truncate hidden sm:inline">YOLOv8n · portrait_det_v2.pt</span>
+            <span className="text-slate-500 truncate hidden sm:inline">YOLOv8n</span>
           </div>
 
           {/* Photo box */}
@@ -167,69 +281,55 @@ const CVDetectionCard = () => {
                   "linear-gradient(90deg, transparent, #22c55e 50%, transparent)",
                 boxShadow: "0 0 12px #22c55e",
                 animation: "scan-y 3s linear infinite",
+                zIndex: 4,
               }}
             />
 
-            {/* PERSON box (whole) — z:1 */}
-            <div className="absolute inset-0 pointer-events-none" style={{ border: "2px solid #22c55e", zIndex: 1 }}>
-              <Corners color="#22c55e" />
-              <Chip text="PERSON · 0.97" bg="#22c55e" position="top-1 left-1" />
+            {/* crosshair reticle (subtle) */}
+            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 5 }}>
+              <div className="absolute top-2 left-2 text-[8px] font-mono text-green-500/70">+</div>
+              <div className="absolute top-2 right-2 text-[8px] font-mono text-green-500/70">+</div>
+              <div className="absolute bottom-2 left-2 text-[8px] font-mono text-green-500/70">+</div>
+              <div className="absolute bottom-2 right-2 text-[8px] font-mono text-green-500/70">+</div>
             </div>
 
-            {/* FACE box — forehead → chin, cheeks. z:2 */}
-            <div
-              className="absolute pointer-events-none"
-              style={{
-                top: "14%",
-                height: "49%",
-                left: "29%",
-                right: "28%",
-                border: "2px solid #3b82f6",
-                borderRadius: "2px",
-                zIndex: 2,
-              }}
-            >
-              <Chip text="FACE · 0.94" bg="#3b82f6" fg="#0a0a0f" position="-top-4 left-0" />
-            </div>
-
-            {/* GLASSES box — frame only, inside face. z:3 */}
-            <div
-              className="absolute pointer-events-none"
-              style={{
-                top: "28%",
-                height: "13%",
-                left: "36%",
-                right: "30%",
-                border: "2px solid #f59e0b",
-                borderRadius: "2px",
-                zIndex: 3,
-              }}
-            >
-              <Chip text="GLASSES · 0.91" bg="#f59e0b" position="-top-4 right-0" />
-            </div>
-
-            {/* SMILE box — lips only, top layer, max contrast. z:10 */}
-            <div
-              className="absolute pointer-events-none"
-              style={{
-                top: "51%",
-                height: "8%",
-                left: "44%",
-                right: "38%",
-                border: "3px solid #ff2d55",
-                borderRadius: "2px",
-                boxShadow: "0 0 10px rgba(255,45,85,0.85)",
-                zIndex: 10,
-              }}
-            >
-              <Chip text="SMILE · 0.88" bg="#ff2d55" fg="#ffffff" position="-bottom-4 right-0" />
-            </div>
+            {/* Detection boxes — rendered sequentially */}
+            {DETECTIONS.map((d) => {
+              if (!shownBoxes[d.key]) return null;
+              const isPerson = d.key === "PERSON";
+              return (
+                <div
+                  key={d.key}
+                  className="absolute pointer-events-none animate-in fade-in duration-300"
+                  style={{
+                    top: `${d.top}%`,
+                    left: `${d.left}%`,
+                    width: `${d.width}%`,
+                    height: `${d.height}%`,
+                    border: `${d.borderWidth}px solid ${d.color}`,
+                    borderRadius: "2px",
+                    boxShadow: d.glow,
+                    zIndex: d.z,
+                  }}
+                >
+                  {isPerson && <Corners color={d.color} />}
+                  <Chip
+                    text={`${d.label} · ${animatedConf[d.key].toFixed(2)}`}
+                    bg={d.color}
+                    fg={d.chipFg}
+                    position={d.chipPos}
+                  />
+                </div>
+              );
+            })}
           </div>
 
           {/* Statusbar */}
           <div className="flex items-center justify-between text-[10px] font-mono mt-2 gap-2">
-            <span className="text-slate-500 truncate">frame: 0001 img: 675×506 iou: 0.45 conf: 0.25</span>
-            <span className="text-green-500 whitespace-nowrap">● LIVE · 28.4 FPS</span>
+            <span className="text-slate-500 truncate">
+              f:{String(frame).padStart(4, "0")} · {latency.toFixed(1)}ms
+            </span>
+            <span className="text-green-500 whitespace-nowrap">● LIVE · {fps.toFixed(1)} FPS</span>
           </div>
         </div>
 
@@ -237,22 +337,30 @@ const CVDetectionCard = () => {
         <div className="flex flex-col">
           {/* Panel 1: detections */}
           <div className="p-4 md:p-5" style={{ borderBottom: "1px solid #1e293b" }}>
-            <div className="text-[11px] font-mono text-slate-500 mb-3">// detections · 4 objects</div>
+            <div className="text-[11px] font-mono text-slate-500 mb-3">
+              // detections · {Object.values(shownBoxes).filter(Boolean).length}/4 objects
+            </div>
             <div className="space-y-2.5">
               {DETECTIONS.map((d) => (
-                <div key={d.label}>
+                <div key={d.label} style={{ opacity: shownBoxes[d.key] ? 1 : 0.3 }} className="transition-opacity">
                   <div className="flex items-center justify-between text-xs font-mono mb-1">
                     <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full" style={{ background: d.color }} />
+                      <span
+                        className="w-2 h-2 rounded-full"
+                        style={{
+                          background: d.color,
+                          boxShadow: shownBoxes[d.key] ? `0 0 6px ${d.color}` : "none",
+                        }}
+                      />
                       <span className="text-slate-200">{d.label}</span>
                     </div>
-                    <span style={{ color: d.color }}>{d.conf.toFixed(2)}</span>
+                    <span style={{ color: d.color }}>{animatedConf[d.key].toFixed(2)}</span>
                   </div>
                   <div className="h-1 rounded-full overflow-hidden" style={{ background: "#1e293b" }}>
                     <div
-                      className="h-full transition-all duration-[1200ms] ease-out"
+                      className="h-full"
                       style={{
-                        width: animatedConf ? `${d.conf * 100}%` : "0%",
+                        width: `${animatedConf[d.key] * 100}%`,
                         background: d.color,
                       }}
                     />
