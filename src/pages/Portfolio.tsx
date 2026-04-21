@@ -34,8 +34,8 @@ const projects = [
     tech: ["YOLOv8", "Python", "OpenCV", "PyTorch", "Roboflow"],
     category: "Deep Learning",
     image: imgWeapon,
-    github: "https://github.com/MurtazaMajid/Weapon-Detection-YOLOv8",
-    demo: "",
+    github: "https://github.com/MurtazaMajid/Sentinel-AI-Real-Time-Weapon-Detection-System-",
+    demo: "sentinel-ai-real-time-weapon-detection.vercel.app",
   },
   {
     title: "Gmail Email Classification Pipeline",
