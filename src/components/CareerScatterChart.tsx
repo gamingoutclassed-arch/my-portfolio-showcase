@@ -71,7 +71,6 @@ const ROLES: Role[] = [
     x: 2025.95,
     y: 4,
     color: "#22c55e",
-    current: true,
     stack: "PyTorch · OpenCV · MediaPipe · Roboflow",
     bullets: [
       "Optimized PyTorch models for cricket video analysis under motion blur",
