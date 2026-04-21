@@ -270,15 +270,29 @@ const CVDetectionCard = () => {
     return () => timeouts.forEach(clearTimeout);
   }, [calibrate]);
 
-  // Live frame counter + jittered fps/latency for "real-time" feel
+  // Live frame counter + jitter for "real-time" feel
+  const [jitter, setJitter] = useState<Record<DetKey, { dx: number; dy: number; dw: number; dh: number; conf: number }>>({
+    PERSON: { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 },
+    FACE: { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 },
+    GLASSES: { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 },
+    SMILE: { dx: 0, dy: 0, dw: 0, dh: 0, conf: 0 },
+  });
+
   useEffect(() => {
     const id = window.setInterval(() => {
       setFrame((f) => f + 1);
       setFps(28 + Math.random() * 2);
       setLatency(32 + Math.random() * 6);
-    }, 120);
+      if (calibrate) return;
+      setJitter({
+        PERSON: { dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3, dw: (Math.random() - 0.5) * 0.4, dh: (Math.random() - 0.5) * 0.4, conf: (Math.random() - 0.5) * 0.02 },
+        FACE: { dx: (Math.random() - 0.5) * 0.6, dy: (Math.random() - 0.5) * 0.6, dw: (Math.random() - 0.5) * 0.8, dh: (Math.random() - 0.5) * 0.8, conf: (Math.random() - 0.5) * 0.04 },
+        GLASSES: { dx: (Math.random() - 0.5) * 0.8, dy: (Math.random() - 0.5) * 0.8, dw: (Math.random() - 0.5) * 1.0, dh: (Math.random() - 0.5) * 0.8, conf: (Math.random() - 0.5) * 0.05 },
+        SMILE: { dx: (Math.random() - 0.5) * 1.0, dy: (Math.random() - 0.5) * 1.0, dw: (Math.random() - 0.5) * 1.2, dh: (Math.random() - 0.5) * 1.0, conf: (Math.random() - 0.5) * 0.06 },
+      });
+    }, 200);
     return () => clearInterval(id);
-  }, []);
+  }, [calibrate]);
 
   // typewriter inference log
   useEffect(() => {
