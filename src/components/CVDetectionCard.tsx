@@ -164,14 +164,98 @@ const CVDetectionCard = () => {
   const [fps, setFps] = useState(28.4);
   const [latency, setLatency] = useState(34.7);
   const cardRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
+
+  // ===== Calibration mode =====
+  type BoxRect = { top: number; left: number; width: number; height: number };
+  const [calibrate, setCalibrate] = useState(false);
+  const [rects, setRects] = useState<Record<DetKey, BoxRect>>(() => {
+    const init = {} as Record<DetKey, BoxRect>;
+    DETECTIONS.forEach((d) => {
+      init[d.key] = { top: d.top, left: d.left, width: d.width, height: d.height };
+    });
+    return init;
+  });
+
+  const onPointerDown = (
+    e: React.PointerEvent,
+    key: DetKey,
+    mode: "move" | "nw" | "ne" | "sw" | "se"
+  ) => {
+    if (!calibrate || !photoRef.current) return;
+    e.stopPropagation();
+    e.preventDefault();
+    const photoRect = photoRef.current.getBoundingClientRect();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const start = { ...rects[key] };
+    try { (e.target as Element).setPointerCapture?.(e.pointerId); } catch {}
+
+    const onMove = (ev: PointerEvent) => {
+      const dxPct = ((ev.clientX - startX) / photoRect.width) * 100;
+      const dyPct = ((ev.clientY - startY) / photoRect.height) * 100;
+      setRects((r) => {
+        const next = { ...start };
+        if (mode === "move") {
+          next.left = Math.max(0, Math.min(100 - start.width, start.left + dxPct));
+          next.top = Math.max(0, Math.min(100 - start.height, start.top + dyPct));
+        } else if (mode === "se") {
+          next.width = Math.max(2, Math.min(100 - start.left, start.width + dxPct));
+          next.height = Math.max(2, Math.min(100 - start.top, start.height + dyPct));
+        } else if (mode === "nw") {
+          const w = Math.max(2, start.width - dxPct);
+          const h = Math.max(2, start.height - dyPct);
+          next.left = start.left + (start.width - w);
+          next.top = start.top + (start.height - h);
+          next.width = w;
+          next.height = h;
+        } else if (mode === "ne") {
+          next.width = Math.max(2, start.width + dxPct);
+          const h = Math.max(2, start.height - dyPct);
+          next.top = start.top + (start.height - h);
+          next.height = h;
+        } else if (mode === "sw") {
+          const w = Math.max(2, start.width - dxPct);
+          next.left = start.left + (start.width - w);
+          next.width = w;
+          next.height = Math.max(2, start.height + dyPct);
+        }
+        return { ...r, [key]: next };
+      });
+    };
+    const onUp = () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  };
+
+  const copyCoords = () => {
+    const out = (Object.keys(rects) as DetKey[])
+      .map((k) => {
+        const r = rects[k];
+        return `${k}: top: ${r.top.toFixed(1)}, left: ${r.left.toFixed(1)}, width: ${r.width.toFixed(1)}, height: ${r.height.toFixed(1)},`;
+      })
+      .join("\n");
+    navigator.clipboard?.writeText(out).catch(() => {});
+    console.log("[calibration coords]\n" + out);
+    alert("Coords copied to clipboard & logged to console:\n\n" + out);
+  };
 
   // Reveal boxes sequentially + animate confidence per box
   useEffect(() => {
+    if (calibrate) {
+      setShownBoxes({ PERSON: true, FACE: true, GLASSES: true, SMILE: true });
+      const full = {} as Record<DetKey, number>;
+      DETECTIONS.forEach((d) => (full[d.key] = d.conf));
+      setAnimatedConf(full);
+      return;
+    }
     const timeouts: number[] = [];
     DETECTIONS.forEach((d) => {
       const t1 = window.setTimeout(() => {
         setShownBoxes((s) => ({ ...s, [d.key]: true }));
-        // ramp confidence
         const start = performance.now();
         const dur = 700;
         const tick = () => {
@@ -184,7 +268,7 @@ const CVDetectionCard = () => {
       timeouts.push(t1);
     });
     return () => timeouts.forEach(clearTimeout);
-  }, []);
+  }, [calibrate]);
 
   // Live frame counter + jittered fps/latency for "real-time" feel
   useEffect(() => {
