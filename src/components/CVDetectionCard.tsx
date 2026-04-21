@@ -497,7 +497,9 @@ const CVDetectionCard = () => {
               // detections · {Object.values(shownBoxes).filter(Boolean).length}/4 objects
             </div>
             <div className="space-y-2.5">
-              {DETECTIONS.map((d) => (
+              {DETECTIONS.map((d) => {
+                const live = Math.max(0, Math.min(1, animatedConf[d.key] + (calibrate ? 0 : jitter[d.key].conf)));
+                return (
                 <div key={d.label} style={{ opacity: shownBoxes[d.key] ? 1 : 0.3 }} className="transition-opacity">
                   <div className="flex items-center justify-between text-xs font-mono mb-1">
                     <div className="flex items-center gap-2">
@@ -510,19 +512,20 @@ const CVDetectionCard = () => {
                       />
                       <span className="text-slate-200">{d.label}</span>
                     </div>
-                    <span style={{ color: d.color }}>{animatedConf[d.key].toFixed(2)}</span>
+                    <span style={{ color: d.color }}>{live.toFixed(2)}</span>
                   </div>
                   <div className="h-1 rounded-full overflow-hidden" style={{ background: "#1e293b" }}>
                     <div
-                      className="h-full"
+                      className="h-full transition-all duration-200"
                       style={{
-                        width: `${animatedConf[d.key] * 100}%`,
+                        width: `${live * 100}%`,
                         background: d.color,
                       }}
                     />
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
