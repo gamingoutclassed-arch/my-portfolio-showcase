@@ -15,6 +15,7 @@ import imgEmail from "@/assets/project-mailintel.png";
 import imgDocument from "@/assets/project-document-times.png";
 import imgApple from "@/assets/project-apple-fhi.png";
 import imgPlanets from "@/assets/project-astro-life.png";
+import imgCampbells from "@/assets/projects/campbells.png";
 
 const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning", "NLP"];
 
@@ -27,6 +28,15 @@ const projects = [
     image: imgAutocop,
     github: "https://github.com/MurtazaMajid/AutoCop",
     demo: "",
+  },
+  {
+    title: "Campbell's AI Marketing Hub",
+    description: "End-to-end AI marketing intelligence platform predicting customer churn at 84% AUC, segmenting 1,500+ customers via RFM KMeans clustering, ABSA sentiment analysis, and auto-generating personalized SMS, email & push notifications using LLaMA 3.3-70B.",
+    tech: ["XGBoost", "KMeans", "FastAPI", "Supabase", "React", "Groq API"],
+    category: "Machine Learning",
+    image: imgCampbells,
+    github: "https://github.com/MurtazaMajid/campbells-ai-hub",
+    demo: "https://campbells-ai-hub.vercel.app/",
   },
   {
     title: "Weapon Detection with YOLOv8",
@@ -114,6 +124,7 @@ const projects = [
 // Visual complexity (1-10) per project, drives bubble-chart sizing
 const COMPLEXITY: Record<string, number> = {
   "AutoCop – AI Traffic Violation Detection": 10,
+  "Campbell's AI Marketing Hub": 9,
   "Weapon Detection with YOLOv8": 8,
   "Gmail Email Classification Pipeline": 9,
   "Document Categorization using NLP": 7,
@@ -301,4 +312,3 @@ const Portfolio = () => (
 );
 
 export default Portfolio;
-
