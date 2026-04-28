@@ -111,12 +111,12 @@ const projects = [
     demo: "https://astro-life-quest.vercel.app/",
   },
   {
-    title: "Parking Violation Risk Prediction",
+    title: "Air MLX Hackathon - Parking Violation Risk Prediction",
     description: "ML system achieving RMSE of 0.13 — Winner of Air MLX Hackathon 2025.",
     tech: ["Python", "Scikit-Learn", "Feature Engineering", "XGBoost"],
     category: "Machine Learning",
     image: imgParking,
-    github: "https://github.com/MurtazaMajid/Parking-Violation-Prediction",
+    github: "https://github.com/MurtazaMajid/Air-MLX-Hackathon",
     demo: "",
   },
 ];
