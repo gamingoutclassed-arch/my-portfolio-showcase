@@ -22,6 +22,15 @@ const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning",
 
 const projects = [
   {
+    title: "Awam Assist – Citizen Services RAG Chatbot",
+    description: "Production RAG chatbot for Pakistani citizens covering 15 government services (NADRA, Passport, Zakat, BISP, FBR & more). Bilingual (English + Roman Urdu) with HuggingFace MiniLM embeddings, ChromaDB vector store, LangChain LCEL chain, and zero-hallucination category-filtered retrieval — deployed live on Vercel + Railway.",
+    tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
+    category: "NLP",
+    image: imgAwam,
+    github: "https://github.com/MurtazaMajid/Awam-Asist-Citizen-Services-Navigation-RAG-Chatbot",
+    demo: "https://awamassist.vercel.app/",
+  },
+  {
     title: "AutoCop – AI Traffic Violation Detection",
     description: "Real-time AI traffic monitoring system detecting 6+ violation types at 95%+ accuracy with automated Gmail alerts.",
     tech: ["YOLOv11", "OpenCV", "FastAPI", "PostgreSQL", "Next.js"],
