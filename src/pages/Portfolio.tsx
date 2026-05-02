@@ -16,10 +16,20 @@ import imgDocument from "@/assets/project-document-times.png";
 import imgApple from "@/assets/project-apple-fhi.png";
 import imgPlanets from "@/assets/project-astro-life.png";
 import imgCampbells from "@/assets/projects/campbells.png";
+import imgAwam from "@/assets/projects/awam-assist.jpg";
 
 const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning", "NLP"];
 
 const projects = [
+  {
+    title: "Awam Assist – Citizen Services RAG Chatbot",
+    description: "Production RAG chatbot for Pakistani citizens covering 15 government services (NADRA, Passport, Zakat, BISP, FBR & more). Bilingual (English + Roman Urdu) with HuggingFace MiniLM embeddings, ChromaDB vector store, LangChain LCEL chain, and zero-hallucination category-filtered retrieval — deployed live on Vercel + Railway.",
+    tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
+    category: "NLP",
+    image: imgAwam,
+    github: "https://github.com/MurtazaMajid/Awam-Asist-Citizen-Services-Navigation-RAG-Chatbot",
+    demo: "https://awamassist.vercel.app/",
+  },
   {
     title: "AutoCop – AI Traffic Violation Detection",
     description: "Real-time AI traffic monitoring system detecting 6+ violation types at 95%+ accuracy with automated Gmail alerts.",
@@ -123,6 +133,7 @@ const projects = [
 
 // Visual complexity (1-10) per project, drives bubble-chart sizing
 const COMPLEXITY: Record<string, number> = {
+  "Awam Assist – Citizen Services RAG Chatbot": 10,
   "AutoCop – AI Traffic Violation Detection": 10,
   "Campbells AI and Marketing Hub": 9,
   "SentinelAI – Real-Time Weapon Detection System": 8,
