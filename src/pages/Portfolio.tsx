@@ -133,6 +133,7 @@ const projects = [
 
 // Visual complexity (1-10) per project, drives bubble-chart sizing
 const COMPLEXITY: Record<string, number> = {
+  "Awam Assist – Citizen Services RAG Chatbot": 10,
   "AutoCop – AI Traffic Violation Detection": 10,
   "Campbells AI and Marketing Hub": 9,
   "SentinelAI – Real-Time Weapon Detection System": 8,
