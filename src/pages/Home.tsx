@@ -90,8 +90,8 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <StatCounter end={6} suffix="+" label="AI Apps Built" />
-              <StatCounter end={2} label="Internships" />
+              <StatCounter end={9} suffix="+" label="AI Apps Built" />
+              <StatCounter end={3} label="Internships" />
               <StatCounter end={15} suffix="%" label="Forecast Gain" />
             </motion.div>
 
