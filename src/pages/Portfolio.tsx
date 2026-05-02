@@ -22,13 +22,13 @@ const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning",
 
 const projects = [
   {
-    title: "Awam Assist – Citizen Services RAG Chatbot",
-    description: "Production RAG chatbot for Pakistani citizens covering 15 government services (NADRA, Passport, Zakat, BISP, FBR & more). Bilingual (English + Roman Urdu) with HuggingFace MiniLM embeddings, ChromaDB vector store, LangChain LCEL chain, and zero-hallucination category-filtered retrieval. Deployed live on Vercel + Railway.",
-    tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
-    category: "NLP",
-    image: imgAwam,
-    github: "https://github.com/MurtazaMajid/Awam-Asist-Citizen-Services-Navigation-RAG-Chatbot",
-    demo: "https://awamassist.vercel.app/",
+   title: "Awam Assist – Citizen Services Navigator",
+description: "Production RAG chatbot helping Pakistani citizens navigate 15 government services including NADRA, Passport, Zakat, BISP, and FBR. Answers in English and Roman Urdu via bilingual retrieval. Features voice input through Web Speech API with Groq Whisper fallback. Built with HuggingFace embeddings, ChromaDB, LangChain LCEL, and FastAPI. Deployed live on Vercel and Railway.",
+tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
+category: "NLP",
+image: imgAwam,
+github: "https://github.com/MurtazaMajid/Awam-Asist-Citizen-Services-Navigation-RAG-Chatbot",
+demo: "https://awamassist.vercel.app/",
   },
   {
     title: "AutoCop – AI Traffic Violation Detection",
