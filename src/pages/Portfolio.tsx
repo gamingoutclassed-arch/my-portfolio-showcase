@@ -23,7 +23,7 @@ const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning",
 const projects = [
   {
     title: "Awam Assist – Citizen Services RAG Chatbot",
-    description: "Production RAG chatbot for Pakistani citizens covering 15 government services (NADRA, Passport, Zakat, BISP, FBR & more). Bilingual (English + Roman Urdu) with HuggingFace MiniLM embeddings, ChromaDB vector store, LangChain LCEL chain, and zero-hallucination category-filtered retrieval — deployed live on Vercel + Railway.",
+    description: "Production RAG chatbot for Pakistani citizens covering 15 government services (NADRA, Passport, Zakat, BISP, FBR & more). Bilingual (English + Roman Urdu) with HuggingFace MiniLM embeddings, ChromaDB vector store, LangChain LCEL chain, and zero-hallucination category-filtered retrieval. Deployed live on Vercel + Railway.",
     tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
     category: "NLP",
     image: imgAwam,
