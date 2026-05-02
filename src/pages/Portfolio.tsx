@@ -16,6 +16,7 @@ import imgDocument from "@/assets/project-document-times.png";
 import imgApple from "@/assets/project-apple-fhi.png";
 import imgPlanets from "@/assets/project-astro-life.png";
 import imgCampbells from "@/assets/projects/campbells.png";
+import imgAwam from "@/assets/projects/awam-assist.jpg";
 
 const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning", "NLP"];
 
