@@ -14,7 +14,7 @@ import imgBritish from "@/assets/projects/british-airways.jpg";
 import imgPlanets from "@/assets/projects/planets-habitability.jpg";
 import imgAutocop from "@/assets/projects/autocop.jpg";
 import imgParking from "@/assets/projects/parking-violation.jpg";
-import imgPakwheels from "@/assets/projects/Car price.ppg";
+import imgPakwheels from "@/assets/projects/Car price.png";
 const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning", "NLP"];
 
 const projects = [
