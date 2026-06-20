@@ -241,5 +241,5 @@ const Portfolio = () => {
     </div>
   );
 };
-
+export { Portfolio as PortfolioContent };
 export default Portfolio;
