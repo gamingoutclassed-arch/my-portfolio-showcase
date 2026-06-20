@@ -1,35 +1,23 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, LayoutGrid, CircleDot } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ProjectBubbleChart from "@/components/ProjectBubbleChart";
 
 import imgWeapon from "@/assets/projects/weapon-detection.jpg";
 import imgTitanic from "@/assets/projects/titanic.jpg";
+import imgDocument from "@/assets/projects/document-nlp.jpg";
 import imgNeo from "@/assets/projects/neo-analysis.jpg";
+import imgEmail from "@/assets/projects/email-classification.jpg";
+import imgApple from "@/assets/projects/apple-forecasting.jpg";
 import imgBritish from "@/assets/projects/british-airways.jpg";
+import imgPlanets from "@/assets/projects/planets-habitability.jpg";
 import imgAutocop from "@/assets/projects/autocop.jpg";
 import imgParking from "@/assets/projects/parking-violation.jpg";
-import imgEmail from "@/assets/project-mailintel.png";
-import imgDocument from "@/assets/project-document-times.png";
-import imgApple from "@/assets/project-apple-fhi.png";
-import imgPlanets from "@/assets/project-astro-life.png";
-import imgCampbells from "@/assets/projects/campbells.png";
-import imgAwam from "@/assets/projects/awam-assist.jpg";
-
+import imgPakwheels from "@/assets/projects/Car price.ppg";
 const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning", "NLP"];
 
 const projects = [
-  {
-   title: "Awam Assist – Citizen Services Navigator",
-description: "Production RAG chatbot helping Pakistani citizens navigate 15 government services including NADRA, Passport, Zakat, BISP, and FBR. Answers in English and Roman Urdu via bilingual retrieval. Features voice input through Web Speech API with Groq Whisper fallback. Built with HuggingFace embeddings, ChromaDB, LangChain LCEL, and FastAPI. Deployed live on Vercel and Railway.",
-tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
-category: "NLP",
-image: imgAwam,
-github: "https://github.com/MurtazaMajid/Awam-Asist-Citizen-Services-Navigation-RAG-Chatbot",
-demo: "https://awamassist.vercel.app/",
-  },
   {
     title: "AutoCop – AI Traffic Violation Detection",
     description: "Real-time AI traffic monitoring system detecting 6+ violation types at 95%+ accuracy with automated Gmail alerts.",
@@ -40,39 +28,39 @@ demo: "https://awamassist.vercel.app/",
     demo: "",
   },
   {
-    title: "Campbells AI and Marketing Hub",
-    description: "End-to-end AI marketing intelligence platform predicting customer churn at 84% AUC, segmenting 1,500+ customers via RFM KMeans clustering, ABSA sentiment analysis, and auto-generating personalized SMS, email & push notifications using LLaMA 3.3-70B.",
-    tech: ["XGBoost", "KMeans", "FastAPI", "Supabase", "React", "Groq API"],
-    category: "Machine Learning",
-    image: imgCampbells,
-    github: "https://github.com/MurtazaMajid/Campbells-AI-and-Marketing-Hub",
-    demo: "https://campbells-ai-hub.vercel.app/",
+  title: "Pakistan Car Price MLOps Pipeline",
+  description: "End-to-end MLOps pipeline predicting used car prices in Pakistan. XGBoost model trained on 7,995 Pakwheels listings with MAPE 10.85%, automated drift detection, CI/CD via GitHub Actions, and deployed on AWS EC2 via Docker.",
+  tech: ["XGBoost", "FastAPI", "Docker", "MLflow", "SHAP", "AWS EC2", "GitHub Actions"],
+  category: "Machine Learning",
+  image: imgPakwheels,
+  github: "https://github.com/MurtazaMajid/Pak-wheels-car-price-prediction-full-mlops-pipeline-",
+  demo: "https://pakistan-car-insight.lovable.app/",
   },
   {
-    title: "SentinelAI – Real-Time Weapon Detection System",
-    description: "Real-time weapon detection system using YOLOv8 trained on 8,000 Roboflow-annotated images. Identifies weapons in static images and live camera feeds, surfaced through a deployed web app for public-safety use cases.",
+    title: "Weapon Detection with YOLOv8",
+    description: "Developed a weapon detection system using YOLOv8 trained on a dataset of 8,000 images from Roboflow. Identifies weapons in both static images and live camera feeds.",
     tech: ["YOLOv8", "Python", "OpenCV", "PyTorch", "Roboflow"],
     category: "Deep Learning",
     image: imgWeapon,
-    github: "https://github.com/MurtazaMajid/SentinelAI-Real-Time-Weapon-Detection-System",
-    demo: "https://sentinel-ai-real-time-weapon-detection.vercel.app",
+    github: "https://github.com/MurtazaMajid/Weapon-Detection-YOLOv8",
+    demo: "",
   },
   {
-    title: "MailIntel – Email Classification App",
-    description: "Production-style NLP pipeline classifying 5,000+ real Gmail messages into 5 categories. Compares Naive Bayes, SVM, and LSTM under identical conditions; LSTM wins at 81% accuracy. 13-stage cleaning pipeline with TF-IDF feature engineering, deployed end-to-end.",
+    title: "Gmail Email Classification Pipeline",
+    description: "End-to-end NLP pipeline classifying 5,000+ Gmail emails into five categories using TF-IDF and LSTM with 81% accuracy.",
     tech: ["Python", "Scikit-Learn", "TensorFlow", "FastAPI", "Supabase"],
     category: "NLP",
     image: imgEmail,
-    github: "https://github.com/MurtazaMajid/MailIntel-Email-Classification-App",
+    github: "https://github.com/MurtazaMajid/Email-Classification-App",
     demo: "https://mailntel.vercel.app",
   },
   {
-    title: "TheDocumentTimes – Document Categorization App",
-    description: "NLP document classifier built on the 20 Newsgroups dataset. Trains a fine-tuned BERT alongside an LSTM baseline and serves predictions through a clean web app where users paste any text and get its predicted news category in real time.",
-    tech: ["Python", "BERT", "LSTM", "Transformers", "TensorFlow"],
+    title: "Document Categorization using NLP",
+    description: "Created an NLP system that automatically categorizes documents into relevant topics using text preprocessing, feature extraction, and classification algorithms.",
+    tech: ["Python", "NLTK", "SpaCy", "TF-IDF", "Transformers"],
     category: "NLP",
     image: imgDocument,
-    github: "https://github.com/MurtazaMajid/TheDocumentTimes-Document-Categorization-App",
+    github: "https://github.com/MurtazaMajid/Document-Categorization",
     demo: "https://bert-news-classification.vercel.app/",
   },
   {
@@ -90,13 +78,13 @@ demo: "https://awamassist.vercel.app/",
     tech: ["Python", "Scikit-Learn", "Pandas", "Feature Engineering"],
     category: "Machine Learning",
     image: imgNeo,
-    github: "https://github.com/MurtazaMajid/Hazardous-NEOs-Prediction",
+    github: "https://github.com/MurtazaMajid/Hazerdous-NEOs-Prediction-",
     demo: "",
   },
   {
-    title: "Apple FHI Forecasting with ARIMA LSTM",
-    description: "End-to-end forecasting system for Apple's Financial Health Index built from 7 data sources. Trained 4 models (ARIMAX × 2, LSTM × 2), explained with SHAP, deployed live as REST API + interactive web app. Honest benchmark: ARIMAX RMSE 0.0971 with zero data leakage.",
-    tech: ["Python", "ARIMAX", "LSTM", "FinBERT", "SHAP", "FastAPI"],
+    title: "Apple FHI Forecasting with ARIMA & LSTM",
+    description: "Time-series forecasting of Apple's Financial Health Index using ARIMA and LSTM models for accurate trend prediction.",
+    tech: ["Python", "ARIMA", "LSTM", "Pandas", "Matplotlib"],
     category: "Data Analysis",
     image: imgApple,
     github: "https://github.com/MurtazaMajid/Apple-FHI-Forecasting-with-ARIMA-LSTM",
@@ -112,40 +100,24 @@ demo: "https://awamassist.vercel.app/",
     demo: "",
   },
   {
-    title: "AstroLifeQuest – Predicting Planets Habitability",
-    description: "Predicts exoplanet habitability from NASA's Kepler KOI dataset using a physics-informed scoring engine and a tuned XGBoost regressor. Explained with SHAP, deployed as a FastAPI service on HuggingFace Spaces and a Next.js web app on Vercel.",
-    tech: ["Python", "XGBoost", "SHAP", "FastAPI", "Next.js", "NASA KOI"],
+    title: "Predicting Planets Habitability",
+    description: "Revealing the secrets of planet habitability using NASA's KOI Dataset with machine learning classification techniques.",
+    tech: ["Python", "Scikit-Learn", "NASA KOI", "Pandas"],
     category: "Machine Learning",
     image: imgPlanets,
-    github: "https://github.com/MurtazaMajid/AstroLifeQuest-Predicting-Planets-Habitability",
+    github: "https://github.com/MurtazaMajid/Predicing-Planets-Habitability",
     demo: "https://astro-life-quest.vercel.app/",
   },
   {
-    title: "Air MLX Hackathon - Parking Violation Risk Prediction",
+    title: "Parking Violation Risk Prediction",
     description: "ML system achieving RMSE of 0.13 — Winner of Air MLX Hackathon 2025.",
     tech: ["Python", "Scikit-Learn", "Feature Engineering", "XGBoost"],
     category: "Machine Learning",
     image: imgParking,
-    github: "https://github.com/MurtazaMajid/Air-MLX-Hackathon",
+    github: "https://github.com/MurtazaMajid/Parking-Violation-Prediction",
     demo: "",
   },
 ];
-
-// Visual complexity (1-10) per project, drives bubble-chart sizing
-const COMPLEXITY: Record<string, number> = {
-  "Awam Assist – Citizen Services RAG Chatbot": 10,
-  "AutoCop – AI Traffic Violation Detection": 10,
-  "Campbells AI and Marketing Hub": 9,
-  "SentinelAI – Real-Time Weapon Detection System": 8,
-  "MailIntel – Email Classification App": 9,
-  "TheDocumentTimes – Document Categorization App": 7,
-  "Titanic Survival Classification": 5,
-  "Hazardous NEOs Prediction": 6,
-  "Apple FHI Forecasting with ARIMA LSTM": 8,
-  "British Airways Analysis": 6,
-  "AstroLifeQuest – Predicting Planets Habitability": 7,
-  "Parking Violation Risk Prediction": 9,
-};
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -154,15 +126,16 @@ const fadeUp = {
   transition: { duration: 0.5 },
 };
 
-export const PortfolioContent = () => {
+const Portfolio = () => {
   const [active, setActive] = useState("All");
-  const [view, setView] = useState<"grid" | "bubble">("grid");
 
   const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
   return (
-    <>
-      <section id="portfolio" className="pt-20 pb-8 md:pt-28">
+    <div className="min-h-screen bg-background">
+      <Navbar />
+
+      <section className="pt-28 pb-8">
         <div className="container mx-auto px-6 text-center">
           <motion.h1 className="section-heading" {...fadeUp}>My Portfolio</motion.h1>
           <div className="section-divider" />
@@ -170,7 +143,7 @@ export const PortfolioContent = () => {
             Here are some of my data science projects. Each project demonstrates my skills in different areas of data analysis, machine learning, and visualization.
           </motion.p>
 
-          <motion.div className="flex flex-wrap justify-center gap-3 mb-6" {...fadeUp} transition={{ delay: 0.2, duration: 0.5 }}>
+          <motion.div className="flex flex-wrap justify-center gap-3 mb-12" {...fadeUp} transition={{ delay: 0.2, duration: 0.5 }}>
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -181,57 +154,11 @@ export const PortfolioContent = () => {
               </button>
             ))}
           </motion.div>
-
-          {/* View toggle */}
-          <motion.div
-            className="inline-flex items-center gap-1 p-1 rounded-full border border-border bg-card mb-12"
-            {...fadeUp}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <button
-              onClick={() => setView("grid")}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                view === "grid" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-              }`}
-              aria-pressed={view === "grid"}
-            >
-              <LayoutGrid size={14} /> Grid
-            </button>
-            <button
-              onClick={() => setView("bubble")}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                view === "bubble" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-              }`}
-              aria-pressed={view === "bubble"}
-            >
-              <CircleDot size={14} /> Bubble
-            </button>
-          </motion.div>
         </div>
       </section>
 
       <section className="pb-20">
         <div className="container mx-auto px-6">
-          {view === "bubble" ? (
-            <motion.div
-              key="bubble"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              <ProjectBubbleChart
-                projects={projects.map((p) => ({
-                  title: p.title,
-                  category: p.category,
-                  github: p.github,
-                  demo: p.demo,
-                  complexity: COMPLEXITY[p.title] ?? 6,
-                }))}
-                categories={categories}
-                active={active}
-              />
-            </motion.div>
-          ) : (
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -303,23 +230,16 @@ export const PortfolioContent = () => {
               ))}
             </motion.div>
           </AnimatePresence>
-          )}
 
-          {view === "grid" && filtered.length === 0 && (
+          {filtered.length === 0 && (
             <p className="text-center text-muted-foreground py-12">No projects in this category yet.</p>
           )}
         </div>
       </section>
-    </>
+
+      <Footer />
+    </div>
   );
 };
-
-const Portfolio = () => (
-  <div className="min-h-screen bg-background">
-    <Navbar />
-    <PortfolioContent />
-    <Footer />
-  </div>
-);
 
 export default Portfolio;
