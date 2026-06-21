@@ -27,7 +27,7 @@ const projects = [
     tech: ["YOLOv11", "OpenCV", "FastAPI", "PostgreSQL", "Next.js"],
     category: "Deep Learning",
     image: imgAutocop,
-    github: "https://github.com/MurtazaMajid/AutoCop",
+    github: "https://github.com/MurtazaMajid/fyp",
     demo: "",
   },
   {
@@ -36,7 +36,7 @@ const projects = [
     tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
     category: "NLP",
     image: imgAwam,
-    github: "https://github.com/MurtazaMajid/Awam-Assist",
+    github: "https://github.com/MurtazaMajid/Awam-Asist-Citizen-Services-Navigation-RAG-Chatbot",
     demo: "https://awamassist.vercel.app/",
   },
   {
@@ -63,8 +63,8 @@ const projects = [
     tech: ["YOLOv8", "Python", "OpenCV", "PyTorch", "Roboflow"],
     category: "Deep Learning",
     image: imgWeapon,
-    github: "https://github.com/MurtazaMajid/Weapon-Detection-YOLOv8",
-    demo: "",
+    github: "https://github.com/MurtazaMajid/SentinelAI-Real-Time-Weapon-Detection-System",
+    demo: "https://sentinel-ai-real-time-weapon-detection.vercel.app/",
   },
   {
     title: "Gmail Email Classification Pipeline",
@@ -72,7 +72,7 @@ const projects = [
     tech: ["Python", "Scikit-Learn", "TensorFlow", "FastAPI", "Supabase"],
     category: "NLP",
     image: imgEmail,
-    github: "https://github.com/MurtazaMajid/Email-Classification-App",
+    github: "https://github.com/MurtazaMajid/MailIntel-Email-Classification-App",
     demo: "https://mailntel.vercel.app",
   },
   {
@@ -81,7 +81,7 @@ const projects = [
     tech: ["Python", "NLTK", "SpaCy", "TF-IDF", "Transformers"],
     category: "NLP",
     image: imgDocument,
-    github: "https://github.com/MurtazaMajid/Document-Categorization",
+    github: "https://github.com/MurtazaMajid/TheDocumentTimes-Document-Categorization-App",
     demo: "https://bert-news-classification.vercel.app/",
   },
   {
@@ -99,7 +99,7 @@ const projects = [
     tech: ["Python", "Scikit-Learn", "Pandas", "Feature Engineering"],
     category: "Machine Learning",
     image: imgNeo,
-    github: "https://github.com/MurtazaMajid/Hazerdous-NEOs-Prediction-",
+    github: "https://github.com/MurtazaMajid/Hazardous-NEOs-Prediction",
     demo: "",
   },
   {
@@ -126,7 +126,7 @@ const projects = [
     tech: ["Python", "Scikit-Learn", "NASA KOI", "Pandas"],
     category: "Machine Learning",
     image: imgPlanets,
-    github: "https://github.com/MurtazaMajid/Predicing-Planets-Habitability",
+    github: "https://github.com/MurtazaMajid/AstroLifeQuest-Predicting-Planets-Habitability",
     demo: "https://astro-life-quest.vercel.app/",
   },
   {
@@ -135,7 +135,7 @@ const projects = [
     tech: ["Python", "Scikit-Learn", "Feature Engineering", "XGBoost"],
     category: "Machine Learning",
     image: imgParking,
-    github: "https://github.com/MurtazaMajid/Parking-Violation-Prediction",
+    github: "https://github.com/MurtazaMajid/Air-MLX-Hackathon",
     demo: "",
   },
 ];
