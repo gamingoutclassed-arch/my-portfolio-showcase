@@ -15,6 +15,9 @@ import imgPlanets from "@/assets/projects/planets-habitability.jpg";
 import imgAutocop from "@/assets/projects/autocop.jpg";
 import imgParking from "@/assets/projects/parking-violation.jpg";
 import imgPakwheels from "@/assets/projects/Car price.png";
+import imgAwam from "@/assets/projects/awam-assist.jpg";
+import imgCampbells from "@/assets/projects/campbells.png";
+
 const categories = ["All", "Data Analysis", "Deep Learning", "Machine Learning", "NLP"];
 
 const projects = [
@@ -28,13 +31,31 @@ const projects = [
     demo: "",
   },
   {
-  title: "Pakistan Car Price MLOps Pipeline",
-  description: "End-to-end MLOps pipeline predicting used car prices in Pakistan. XGBoost model trained on 7,995 Pakwheels listings with MAPE 10.85%, automated drift detection, CI/CD via GitHub Actions, and deployed on AWS EC2 via Docker.",
-  tech: ["XGBoost", "FastAPI", "Docker", "MLflow", "SHAP", "AWS EC2", "GitHub Actions"],
-  category: "Machine Learning",
-  image: imgPakwheels,
-  github: "https://github.com/MurtazaMajid/Pak-wheels-car-price-prediction-full-mlops-pipeline-",
-  demo: "https://pakistan-car-insight.lovable.app/",
+    title: "Awam Assist – Citizen AI Chatbot",
+    description: "Production RAG chatbot covering 15 Pakistani government services (NADRA, Zakat, BISP, Passport, FBR) with bilingual support and browser-native Speech-to-Text.",
+    tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
+    category: "NLP",
+    image: imgAwam,
+    github: "https://github.com/MurtazaMajid/Awam-Assist",
+    demo: "https://awamassist.vercel.app/",
+  },
+  {
+    title: "Campbell's AI Marketing Hub",
+    description: "5-model ML pipeline on 12,545 transactions: KMeans RFM segmentation, two-tier churn prediction (ROC-AUC 0.84), ABSA (F1 0.75), and personalized messaging via Groq LLaMA 3.3-70B across 2,041 customers.",
+    tech: ["XGBoost", "Scikit-Learn", "FastAPI", "Supabase", "Groq", "React"],
+    category: "Machine Learning",
+    image: imgCampbells,
+    github: "https://github.com/MurtazaMajid/Campbells-AI-and-Marketing-Hub",
+    demo: "https://campbells-ai-marketing-hub.vercel.app/",
+  },
+  {
+    title: "Pakistan Car Price MLOps Pipeline",
+    description: "End-to-end MLOps pipeline predicting used car prices in Pakistan. XGBoost model trained on 7,995 Pakwheels listings with MAPE 10.85%, automated drift detection, CI/CD via GitHub Actions, and deployed on AWS EC2 via Docker.",
+    tech: ["XGBoost", "FastAPI", "Docker", "MLflow", "SHAP", "AWS EC2", "GitHub Actions"],
+    category: "Machine Learning",
+    image: imgPakwheels,
+    github: "https://github.com/MurtazaMajid/Pak-wheels-car-price-prediction-full-mlops-pipeline-",
+    demo: "https://pakistan-car-insight.lovable.app/",
   },
   {
     title: "Weapon Detection with YOLOv8",
@@ -92,7 +113,7 @@ const projects = [
   },
   {
     title: "British Airways Analysis",
-    description: "British Airways ticket booking analysis and prediction — comprehensive data exploration and predictive modeling.",
+    description: "British Airways ticket booking analysis and prediction, comprehensive data exploration and predictive modeling.",
     tech: ["Python", "Pandas", "Scikit-Learn", "Matplotlib", "Seaborn"],
     category: "Data Analysis",
     image: imgBritish,
@@ -110,7 +131,7 @@ const projects = [
   },
   {
     title: "Parking Violation Risk Prediction",
-    description: "ML system achieving RMSE of 0.13 — Winner of Air MLX Hackathon 2025.",
+    description: "ML system achieving RMSE of 0.13. Winner of Air MLX Hackathon 2025.",
     tech: ["Python", "Scikit-Learn", "Feature Engineering", "XGBoost"],
     category: "Machine Learning",
     image: imgParking,
@@ -176,7 +197,6 @@ const Portfolio = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1, duration: 0.4 }}
                 >
-                  {/* Image */}
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={project.image}
@@ -186,7 +206,6 @@ const Portfolio = () => {
                       width={768}
                       height={512}
                     />
-                    {/* Hover overlay with links */}
                     <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                       <a
                         href={project.github}
@@ -215,7 +234,6 @@ const Portfolio = () => {
                     </div>
                   </div>
 
-                  {/* Content */}
                   <div className="p-6">
                     <span className="text-xs text-primary font-medium uppercase tracking-wider">{project.category}</span>
                     <h3 className="text-foreground font-heading font-semibold text-lg leading-tight mt-2 mb-3">{project.title}</h3>
@@ -241,5 +259,6 @@ const Portfolio = () => {
     </div>
   );
 };
+
 export { Portfolio as PortfolioContent };
 export default Portfolio;
