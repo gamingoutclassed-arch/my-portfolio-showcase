@@ -14,16 +14,37 @@ type Certification = {
   credentialUrl?: string;
 };
 
-// TODO: Replace with your real certifications (name, issuer, date, link)
 const CERTIFICATIONS: Certification[] = [
   {
-    title: "Sample Certification",
-    issuer: "Issuing Organization",
-    date: "2025",
-    skills: ["Skill A", "Skill B"],
-    credentialUrl: "#",
+    title: "Introduction to Big Data with Spark and Hadoop",
+    issuer: "IBM · Coursera",
+    date: "Apr 2025",
+    skills: ["Apache Spark", "Hadoop", "Big Data", "PySpark"],
+    credentialUrl: "https://coursera.org/verify/WA08TEM6YHIF",
+  },
+  {
+    title: "Data Science Job Simulation",
+    issuer: "British Airways · Forage",
+    date: "May 2025",
+    skills: ["Predictive Modeling", "Customer Analytics", "Python"],
+    credentialUrl: "/certificates/british-airways-data-science.pdf",
+  },
+  {
+    title: "Intermediate Python",
+    issuer: "DataCamp",
+    date: "Apr 2025",
+    skills: ["Python", "NumPy", "Pandas", "Control Flow"],
+    credentialUrl: "/certificates/datacamp-intermediate-python.pdf",
+  },
+  {
+    title: "Letter of Appreciation — Computer Vision & AI Intern",
+    issuer: "Scoutrex",
+    date: "Feb 2026",
+    skills: ["PyTorch", "OpenCV", "MediaPipe", "Roboflow", "Pose Estimation"],
+    credentialUrl: "/certificates/scoutrex-appreciation-letter.pdf",
   },
 ];
+
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
