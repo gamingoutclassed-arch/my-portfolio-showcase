@@ -20,21 +20,24 @@ const CERTIFICATIONS: Certification[] = [
     issuer: "IBM · Coursera",
     date: "Apr 2025",
     skills: ["Apache Spark", "Hadoop", "Big Data", "PySpark"],
-    credentialUrl: "https://coursera.org/verify/WA08TEM6YHIF",
+    credentialUrl:
+      "https://www.coursera.org/account/accomplishments/verify/WA08TEM6YHIF",
   },
   {
     title: "Data Science Job Simulation",
     issuer: "British Airways · Forage",
     date: "May 2025",
     skills: ["Predictive Modeling", "Customer Analytics", "Python"],
-    credentialUrl: "/certificates/british-airways-data-science.pdf",
+    credentialUrl:
+      "https://www.theforage.com/completion-certificates/tMjbs76F526fF5v3G/NjynCWzGSaWXQCxSX_tMjbs76F526fF5v3G_4feQu97uKyc4zwS7C_1748726156944_completion_certificate.pdf",
   },
   {
     title: "Intermediate Python",
     issuer: "DataCamp",
     date: "Apr 2025",
     skills: ["Python", "NumPy", "Pandas", "Control Flow"],
-    credentialUrl: "/certificates/datacamp-intermediate-python.pdf",
+    credentialUrl:
+      "https://www.datacamp.com/statement-of-accomplishment/course/4b48f1b8080aeebd05c22efc37a7f2514f361bed?raw=1",
   },
   {
     title: "Letter of Appreciation — Computer Vision & AI Intern",
@@ -44,6 +47,7 @@ const CERTIFICATIONS: Certification[] = [
     credentialUrl: "/certificates/scoutrex-appreciation-letter.pdf",
   },
 ];
+
 
 
 const fadeUp = {
