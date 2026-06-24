@@ -93,9 +93,10 @@ const Certifications = () => {
                       <Award size={24} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-heading font-semibold text-foreground text-lg leading-snug">
+                      <h3 className="font-heading font-semibold text-foreground text-lg leading-snug underline decoration-primary/60 underline-offset-4">
                         {cert.title}
                       </h3>
+
                       <p className="text-sm text-muted-foreground mt-1">
                         {cert.issuer}
                       </p>
