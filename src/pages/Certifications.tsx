@@ -16,6 +16,13 @@ type Certification = {
 
 const CERTIFICATIONS: Certification[] = [
   {
+    title: "AI/ML Data Science Internship",
+    issuer: "ITSOLERA (Pvt) Ltd",
+    date: "2025",
+    skills: ["AI/ML", "Data Science", "Python", "Internship"],
+    credentialUrl: "/certificates/itsolera-data-science-internship.png",
+  },
+  {
     title: "Introduction to Big Data with Spark and Hadoop",
     issuer: "IBM · Coursera",
     date: "Apr 2025",
