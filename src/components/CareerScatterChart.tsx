@@ -19,7 +19,10 @@ interface Role {
   current?: boolean;
   stack: string;
   bullets: string[];
+  certUrl?: string;
+  certLabel?: string;
 }
+
 
 const ROLES: Role[] = [
   {
@@ -63,7 +66,10 @@ const ROLES: Role[] = [
       "Built interactive Streamlit dashboards for KPIs & predictions",
       "Developed end-to-end ML pipelines on real-world structured datasets",
     ],
+    certUrl: "/certificates/itsolera-data-science-internship.png",
+    certLabel: "View Internship Certificate",
   },
+
   {
     title: "Computer Vision & AI Intern",
     company: "Scoutrex",
@@ -77,8 +83,11 @@ const ROLES: Role[] = [
       "Implemented MediaPipe pose extraction for biomechanical analysis",
       "Built action phase segmentation pipeline for bowling stages",
     ],
+    certUrl: "/certificates/scoutrex-appreciation-letter.pdf",
+    certLabel: "View Letter of Appreciation",
   },
 ];
+
 
 const CareerScatterChart = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -239,7 +248,19 @@ const CareerScatterChart = () => {
                 </li>
               ))}
             </ul>
+            {r.certUrl && (
+              <a
+                href={r.certUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 mt-2.5 text-[11px] font-mono underline underline-offset-2 hover:opacity-80"
+                style={{ color: r.color }}
+              >
+                ↗ {r.certLabel ?? "View Certificate"}
+              </a>
+            )}
           </div>
+
         ))}
       </div>
     </div>
