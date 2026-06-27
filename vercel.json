@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/((?!certificates/|assets/|.*\\..*).*)", "destination": "/index.html" }
+  ]
+}
