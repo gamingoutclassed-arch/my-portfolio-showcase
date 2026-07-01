@@ -33,7 +33,7 @@ const CERTIFICATIONS: Certification[] = [
   {
     title: "Data Science Job Simulation",
     issuer: "British Airways · Forage",
-    date: "May 2025",
+    date: "Jun 2025",
     skills: ["Predictive Modeling", "Customer Analytics", "Python"],
     credentialUrl:
       "https://www.theforage.com/completion-certificates/tMjbs76F526fF5v3G/NjynCWzGSaWXQCxSX_tMjbs76F526fF5v3G_4feQu97uKyc4zwS7C_1748726156944_completion_certificate.pdf",
@@ -42,9 +42,17 @@ const CERTIFICATIONS: Certification[] = [
     title: "Intermediate Python",
     issuer: "DataCamp",
     date: "Apr 2025",
-    skills: ["Python", "NumPy", "Pandas", "Control Flow"],
+    skills: ["Python", "NumPy", "Pandas", "Matplotlib"],
     credentialUrl:
       "https://www.datacamp.com/statement-of-accomplishment/course/4b48f1b8080aeebd05c22efc37a7f2514f361bed?raw=1",
+  },
+  {
+    title: "Understanding Artificial Intelligence",
+    issuer: "DataCamp",
+    date: "Feb 2025",
+    skills: ["Artificial Intelligence", "Automation"],
+    credentialUrl:
+      "https://www.datacamp.com/statement-of-accomplishment/course/af6addb8a611daa4cbd1d099693064388d08729a?raw=1",
   },
   {
     title: "Letter of Appreciation — Computer Vision & AI Intern",
@@ -52,6 +60,13 @@ const CERTIFICATIONS: Certification[] = [
     date: "Feb 2026",
     skills: ["PyTorch", "OpenCV", "MediaPipe", "Roboflow", "Pose Estimation"],
     credentialUrl: "/certificates/scoutrex-appreciation-letter.pdf",
+  },
+  {
+    title: "Preparing Data for Analysis with Microsoft Excel",
+    issuer: "Microsoft · Coursera",
+    date: "Aug 2025",
+    skills: ["Microsoft Excel", "Data Cleaning", "Data Analysis"],
+    credentialUrl: "https://coursera.org/verify/76C9H80KDUWT",
   },
   {
     title: "Harnessing the Power of Data with Power BI",
@@ -65,7 +80,7 @@ const CERTIFICATIONS: Certification[] = [
     issuer: "Microsoft · Coursera",
     date: "Dec 2025",
     skills: ["Power BI", "ETL", "Power Query", "Data Modeling"],
-    credentialUrl: "https://coursera.org/verify/QVI6IVLBVOZ4",
+    credentialUrl: "https://coursera.org/verify/QVI6IVLBVQZ4",
   },
   {
     title: "Data Analysis and Visualization with Power BI",
@@ -79,7 +94,7 @@ const CERTIFICATIONS: Certification[] = [
     issuer: "Microsoft · Coursera",
     date: "Dec 2025",
     skills: ["Power BI", "Deployment", "Workspaces", "Capstone"],
-    credentialUrl: "https://coursera.org/verify/1GI8AIYRC0UU",
+    credentialUrl: "https://coursera.org/verify/1GI8AJYRC0UU",
   },
 ];
 
