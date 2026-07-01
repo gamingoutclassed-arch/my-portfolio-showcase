@@ -53,6 +53,34 @@ const CERTIFICATIONS: Certification[] = [
     skills: ["PyTorch", "OpenCV", "MediaPipe", "Roboflow", "Pose Estimation"],
     credentialUrl: "/certificates/scoutrex-appreciation-letter.pdf",
   },
+  {
+    title: "Harnessing the Power of Data with Power BI",
+    issuer: "Microsoft · Coursera",
+    date: "Nov 2025",
+    skills: ["Power BI", "Data Analysis", "Business Intelligence"],
+    credentialUrl: "https://coursera.org/verify/CZG2O5LHSMNP",
+  },
+  {
+    title: "Extract, Transform and Load Data in Power BI",
+    issuer: "Microsoft · Coursera",
+    date: "Dec 2025",
+    skills: ["Power BI", "ETL", "Power Query", "Data Modeling"],
+    credentialUrl: "https://coursera.org/verify/QVI6IVLBVOZ4",
+  },
+  {
+    title: "Data Analysis and Visualization with Power BI",
+    issuer: "Microsoft · Coursera",
+    date: "Dec 2025",
+    skills: ["Power BI", "DAX", "Data Visualization", "Dashboards"],
+    credentialUrl: "https://coursera.org/verify/K3M5CLZG3NNT",
+  },
+  {
+    title: "Deploy and Maintain Power BI Assets and Capstone Project",
+    issuer: "Microsoft · Coursera",
+    date: "Dec 2025",
+    skills: ["Power BI", "Deployment", "Workspaces", "Capstone"],
+    credentialUrl: "https://coursera.org/verify/1GI8AIYRC0UU",
+  },
 ];
 
 
