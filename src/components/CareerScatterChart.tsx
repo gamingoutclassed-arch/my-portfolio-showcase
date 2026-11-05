@@ -86,6 +86,21 @@ const ROLES: Role[] = [
     certUrl: "/certificates/scoutrex-appreciation-letter.pdf",
     certLabel: "View Letter of Appreciation",
   },
+  {
+    title: "AI Engineer (Contract)",
+    company: "Infomist",
+    period: "Aug 2026 – Nov 2026",
+    x: 2026.7,
+    y: 5,
+    color: "#f59e0b",
+    stack: "n8n · ElevenLabs · Gemini 2.5 Flash · Twilio · Python",
+    bullets: [
+      "Built an AI voice receptionist end to end: 110-node n8n backend, 9 webhooks, 10 LLM tools",
+      "100% success across 1,905 scheduled runs; 92% completion on 38 logged phone bookings; prompt cut 60%",
+      "Engineered Gemini + n8n lead-gen for ChiefAI: 210-email pilot, 3.3% bounce, ~45 hours of manual work saved",
+      "Secured 2 exposed API endpoints, fixed 7 workflow bugs, passed 9/9 regression tests on Veer and ChiefAI",
+    ],
+  },
 ];
 
 
@@ -160,7 +175,7 @@ const CareerScatterChart = () => {
           x: {
             type: "linear",
             min: 2022,
-            max: 2026.5,
+            max: 2027,
             ticks: {
               stepSize: 1,
               color: "#475569",
@@ -173,7 +188,7 @@ const CareerScatterChart = () => {
           y: {
             display: false,
             min: 0,
-            max: 5,
+            max: 6,
             grid: { color: "rgba(255,255,255,0.04)" },
           },
         },
