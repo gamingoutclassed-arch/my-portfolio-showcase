@@ -33,7 +33,7 @@ const projects = [
   {
     title: "Awam Assist – Citizen AI Chatbot",
     description: "Production RAG chatbot covering 15 Pakistani government services (NADRA, Zakat, BISP, Passport, FBR) with bilingual support and browser-native Speech-to-Text.",
-    tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq LLaMA 3.3-70B", "FastAPI", "React"],
+    tech: ["LangChain", "ChromaDB", "HuggingFace", "Groq GPT-OSS-20B", "FastAPI", "React"],
     category: "NLP",
     image: imgAwam,
     github: "https://github.com/MurtazaMajid/Awam-Asist-Citizen-Services-Navigation-RAG-Chatbot",
@@ -73,7 +73,7 @@ const projects = [
     category: "NLP",
     image: imgEmail,
     github: "https://github.com/MurtazaMajid/MailIntel-Email-Classification-App",
-    demo: "https://mailntel.vercel.app",
+    demo: "",
   },
   {
     title: "Document Categorization using NLP",
